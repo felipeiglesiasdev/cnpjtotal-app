@@ -6,7 +6,7 @@
 @endpush
 
 @section('content')
-<div class="bg-white py-24 sm:py-32">
+<div class="bg-white py-24 sm:py-32 mt-15">
     <div class="container mx-auto px-6 lg:px-8">
         <div class="max-w-2xl mx-auto text-center">
             <div class="text-6xl text-green-500 mb-4">

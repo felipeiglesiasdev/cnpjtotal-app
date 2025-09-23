@@ -6,7 +6,7 @@
 @endpush
 
 @section('content')
-<div class="bg-white py-12 sm:py-16">
+<div class="bg-white py-12 sm:py-16 mt-15">
     <div class="container mx-auto px-6 lg:px-8">
         <div class="max-w-2xl mx-auto text-center">
             <h1 class="text-4xl font-bold tracking-tight text-[#171717] sm:text-5xl">Solicitação de Remoção de CNPJ</h1>
