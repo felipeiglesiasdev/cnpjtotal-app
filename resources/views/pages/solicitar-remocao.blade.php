@@ -15,7 +15,19 @@
             </p>
         </div>
 
-        {{-- Alerta de Erro --}}
+        {{-- Alerta de Erro de Validação --}}
+        @if ($errors->any())
+            <div class="max-w-xl mx-auto mt-8 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <strong class="font-bold">Ocorreram alguns erros:</strong>
+                <ul class="mt-2 list-disc list-inside">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        
+        {{-- Alerta de Erro Geral --}}
         @if(session('error'))
             <div class="max-w-xl mx-auto mt-8 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
                 <strong class="font-bold">Ocorreu um erro!</strong>
@@ -26,10 +38,14 @@
         <div class="max-w-xl mx-auto mt-8">
             <form action="{{ route('remocao.store') }}" method="POST" class="space-y-6">
                 @csrf
+                {{-- Adiciona o CNPJ bruto como um campo oculto para envio --}}
+                <input type="hidden" name="cnpj" value="{{ $cnpj_raw }}">
+                
                 <div>
-                    <label for="cnpj" class="block text-sm font-semibold leading-6 text-gray-900">CNPJ</label>
+                    <label for="cnpj_display" class="block text-sm font-semibold leading-6 text-gray-900">CNPJ</label>
                     <div class="mt-2.5">
-                        <input type="text" name="cnpj" id="cnpj" value="{{ $cnpj }}" readonly class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6">
+                        {{-- Este campo é apenas para exibição --}}
+                        <input type="text" name="cnpj_display" id="cnpj_display" value="{{ $cnpj_formatado }}" readonly class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6">
                     </div>
                 </div>
 

@@ -350,7 +350,22 @@ class CnpjController extends Controller
     // FUNÇÃO FORMATAR CNAE
     private function formatarCnae(string $codigo): string
     {
-        return vsprintf('%s%s%s%s-%s/%s%s', str_split($codigo));
+        // 1. Remove qualquer caractere que não seja um dígito
+        $codigoLimpo = preg_replace('/\D/', '', $codigo);
+
+        // 2. Se o código tiver 6 dígitos, adiciona um zero à esquerda para normalizar.
+        if (strlen($codigoLimpo) === 6) {
+            $codigoLimpo = '0' . $codigoLimpo;
+        }
+
+        // 3. Verifica se o código agora tem 7 dígitos
+        if (strlen($codigoLimpo) === 7) {
+            // 4. Aplica a formatação padrão XXXX-X/XX usando substr, que é mais seguro
+            return substr($codigoLimpo, 0, 4) . '-' . substr($codigoLimpo, 4, 1) . '/' . substr($codigoLimpo, 5, 2);
+        }
+
+        // 5. Se o código não se encaixar no padrão, retorna o original para evitar quebrar a aplicação.
+        return $codigo;
     }
     // ###########################################################################################################################
     // FUNÇÃO TRADUZIR PORTE DA EMPRESA

@@ -8,20 +8,34 @@ use Illuminate\View\View;
 class PageController extends Controller
 {
 
-    public function solicitarRemocao(string $cnpj): View
+    /**
+     * Mostra o formulário para solicitar a remoção de CNPJ.
+     * Passa tanto o CNPJ formatado (para exibição) quanto o bruto (para o formulário).
+     */
+    public function showRemocaoForm(string $cnpj): View
     {
-        // Formata o CNPJ para exibição antes de enviar para a view
+        // Garante que estamos lidando com um CNPJ limpo (apenas números)
+        $cnpjLimpo = preg_replace('/[^0-9]/', '', $cnpj);
+
+        // Formata o CNPJ para exibição
         $cnpjFormatado = vsprintf('%s.%s.%s/%s-%s', [
-            substr($cnpj, 0, 2), substr($cnpj, 2, 3), substr($cnpj, 5, 3),
-            substr($cnpj, 8, 4), substr($cnpj, 12, 2)
+            substr($cnpjLimpo, 0, 2), substr($cnpjLimpo, 2, 3), substr($cnpjLimpo, 5, 3),
+            substr($cnpjLimpo, 8, 4), substr($cnpjLimpo, 12, 2)
         ]);
 
-        return view('pages.solicitar-remocao', ['cnpj' => $cnpjFormatado]);
+        // Passa ambos os formatos para a view
+        return view('pages.solicitar-remocao', [
+            'cnpj_formatado' => $cnpjFormatado,
+            'cnpj_raw' => $cnpjLimpo
+        ]);
     }
 
-    public function remocaoSuccess(): View
+    /**
+     * Exibe a página de sucesso após a solicitação de remoção.
+     */
+    public function remocaoSuccess(): View|RedirectResponse
     {
-        // Verifica se a sessão 'success' existe antes de renderizar a view
+        // Garante que o usuário só acesse esta página se tiver acabado de enviar o formulário
         if (!session('success')) {
             return redirect()->route('home');
         }
@@ -29,4 +43,5 @@ class PageController extends Controller
         return view('pages.remocao-solicitada');
     }
 }
+
 

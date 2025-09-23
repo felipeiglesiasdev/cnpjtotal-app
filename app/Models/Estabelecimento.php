@@ -70,4 +70,22 @@ class Estabelecimento extends Model // DEFINIÇÃO DA CLASSE ESTABELECIMENTO
     {
         return $this->belongsTo(Cnae::class, 'cnae_fiscal_principal', 'codigo'); // RETORNA O RELACIONAMENTO
     }
+
+    public function getFormattedCnpj(): string
+    {
+        $cnpj = $this->cnpj_basico . $this->cnpj_ordem . $this->cnpj_dv;
+        // Retorna formatado apenas se tiver 14 caracteres
+        if (strlen($cnpj) == 14) {
+            return vsprintf('%s.%s.%s/%s-%s', [
+                substr($cnpj, 0, 2), substr($cnpj, 2, 3), substr($cnpj, 5, 3),
+                substr($cnpj, 8, 4), substr($cnpj, 12, 2)
+            ]);
+        }
+        return $cnpj;
+    }
+
+    public function municipio(): BelongsTo
+    {
+        return $this->belongsTo(Municipio::class, 'municipio', 'codigo');
+    }
 }

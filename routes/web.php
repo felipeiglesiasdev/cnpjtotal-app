@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CnpjController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\RemocaoController;
+use App\Http\Controllers\CnaeController;
+
 
 // Rota para a página inicial
 Route::get('/', function () {
@@ -25,6 +27,12 @@ Route::post('/consultar-cnpj', [CnpjController::class, 'consultar'])->name('cnpj
 Route::get('/cnpj/{cnpj}', [CnpjController::class, 'show'])->name('cnpj.show');
 
 // Rotas para Solicitação de Remoção
-Route::get('/solicitar-remocao/{cnpj}', [PageController::class, 'solicitarRemocao'])->name('remocao.form');
+// ** AQUI ESTÁ A CORREÇÃO PRINCIPAL **
+Route::get('/solicitar-remocao/{cnpj}', [PageController::class, 'showRemocaoForm'])->name('remocao.form');
 Route::post('/solicitar-remocao', [RemocaoController::class, 'store'])->name('remocao.store');
 Route::get('/remocao-solicitada', [PageController::class, 'remocaoSuccess'])->name('remocao.success');
+
+// Consulta de CNAE
+Route::get('/consultar-cnae', [CnaeController::class, 'index'])->name('cnae.index');
+Route::get('/api/cnae/search', [CnaeController::class, 'search'])->name('cnae.search'); // Rota para a busca em tempo real
+Route::get('/cnae/{cnae}', [CnaeController::class, 'show'])->name('cnae.show'); // Rota para a página de detalhes do CNAE
