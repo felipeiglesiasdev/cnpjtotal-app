@@ -1,12 +1,28 @@
 @import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
-@import './font.css';
 
 @theme {
-    --font-family-sans: 'Poppins'
+    --font-sans: "Funnel Sans";
 }
+
+
+::-webkit-scrollbar {
+  width: 12px; 
+  height: 8px; 
+}
+
+::-webkit-scrollbar-track {
+  background: #171717; 
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #ed1c24; 
+  border-radius: 2px; 
+}
+

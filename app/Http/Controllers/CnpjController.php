@@ -12,6 +12,12 @@ use Illuminate\View\View;
 
 class CnpjController extends Controller
 {
+
+    public function index(): View
+    {
+        return view('pages.consultar-cnpj');
+    }
+
     private function findValidEstabelecimento(string $cnpj): ?Empresa
     {
         // 1. Desmonta o CNPJ em suas partes
@@ -41,27 +47,22 @@ class CnpjController extends Controller
     // Se encontrar, redireciona. Se não, volta com erro para o popup.
     public function consultar(Request $request): RedirectResponse
     {
-        // 1. Valida se o campo cnpj foi enviado
         $request->validate(['cnpj' => 'required|string|max:18']);
-        // 2. Limpa o CNPJ, removendo qualquer formatação
         $cnpjLimpo = preg_replace('/[^0-9]/', '', $request->input('cnpj'));
-        // 3. Validação de formato: verifica se o CNPJ tem 14 dígitos
+
         if (strlen($cnpjLimpo) !== 14) {
-            // Se o formato for inválido, retorna para a home com o erro para o popup.
-            return redirect()->route('home')
+            // AQUI ESTÁ A ALTERAÇÃO: Redireciona de volta para a página de consulta
+            return redirect()->route('cnpj.index')
                              ->with('error', 'CNPJ inválido. Por favor, digite os 14 números do CNPJ.');
         }
 
-        // 2. Verifica se o CNPJ é válido de acordo com as novas regras
         $empresa = $this->findValidEstabelecimento($cnpjLimpo);
 
-        // 3. Lógica de redirecionamento
         if ($empresa) {
-            // SE EXISTE E É VÁLIDO: Redireciona para a página de exibição
             return redirect()->route('cnpj.show', ['cnpj' => $cnpjLimpo]);
         } else {
-            // SE NÃO EXISTE OU NÃO É VÁLIDO: Volta com erro para o popup
-            return redirect()->route('home')->with('error', 'CNPJ não encontrado em nossa base de dados.');
+            // AQUI ESTÁ A ALTERAÇÃO: Redireciona de volta para a página de consulta
+            return redirect()->route('cnpj.index')->with('error', 'CNPJ não encontrado em nossa base de dados.');
         }
     }
     //################################################################################################
@@ -106,7 +107,7 @@ class CnpjController extends Controller
         // --- LÓGICA PARA BUSCAR ENDEREÇO (CORRIGIDA) ---
         $logradouroCompleto = trim(implode(' ', [
             $estabelecimento->tipo_logradouro,
-            $estabelecimento->logradouro,
+            $estabelecimento->logradouro . ',',
             $estabelecimento->numero
         ]));
 
@@ -121,9 +122,9 @@ class CnpjController extends Controller
             $cidadeUf
         ]));
 
-        // ATUALIZE SUA_API_KEY com sua chave do Google Cloud Platform
-        $googleMapsUrl = "https://www.google.com/maps/embed/v1/place?key=SUA_API_KEY&q={$enderecoCompletoQuery}";
-        // --- FIM DA LÓGICA ---
+
+        // Link de busca padrão do Google Maps, sem necessidade de API Key
+        $googleMapsUrl = "https://www.google.com/maps/search/?api=1&query={$enderecoCompletoQuery}";
 
 
         // --- LÓGICA PARA BUSCAR CONTATOS (COM VERIFICAÇÃO) ---
@@ -247,7 +248,7 @@ class CnpjController extends Controller
             'bairro' => $estabelecimento->bairro,
             'cidade_uf' => $cidadeUf,
             'cidade' => $nomeMunicipio,
-            'cep' => $estabelecimento->cep,
+            'cep' => $this->formatarCep($estabelecimento->cep),
             'google_maps_url' => $googleMapsUrl,
 
             // Card: Contato (NOVOS DADOS)
@@ -336,6 +337,15 @@ class CnpjController extends Controller
         })->toArray();
     }
 
+    // ###########################################################################################################################
+    private function formatarCep(string $cep): string
+    {
+        $cepLimpo = preg_replace('/[^0-9]/', '', $cep);
+        if (strlen($cepLimpo) === 8) {
+            return vsprintf('%s%s.%s%s%s-%s%s%s', str_split($cepLimpo));
+        }
+        return $cep;
+    }
     // ###########################################################################################################################
     // FUNÇÃO FORMATAR CNAE
     private function formatarCnae(string $codigo): string
