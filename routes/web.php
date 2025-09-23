@@ -5,6 +5,7 @@ use App\Http\Controllers\CnpjController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\RemocaoController;
 use App\Http\Controllers\CnaeController;
+use App\Http\Controllers\SitemapController;
 
 
 // Rota para a página inicial
@@ -36,3 +37,4 @@ Route::get('/remocao-solicitada', [PageController::class, 'remocaoSuccess'])->na
 Route::get('/consultar-cnae', [CnaeController::class, 'index'])->name('cnae.index');
 Route::get('/api/cnae/search', [CnaeController::class, 'search'])->name('cnae.search'); // Rota para a busca em tempo real
 Route::get('/cnae/{cnae}', [CnaeController::class, 'show'])->name('cnae.show'); // Rota para a página de detalhes do CNAE
+Route::get('/sitemap-cnaes.xml', [SitemapController::class, 'cnaes'])->name('sitemap.cnaes');
