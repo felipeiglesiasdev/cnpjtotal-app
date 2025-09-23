@@ -8,7 +8,7 @@
 
 @section('content')
 {{-- Seção Principal com Formulário --}}
-<section class="bg-white">
+<section class="bg-white pt-10">
     <div class="container mx-auto px-6 py-16 md:py-24">
         <div class="grid lg:grid-cols-2 gap-16 items-center">
             {{-- Coluna de Conteúdo e Formulário --}}

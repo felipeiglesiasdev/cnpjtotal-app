@@ -1,16 +1,16 @@
 
 @extends('layouts.app')
 @push('seo_tags')
-    @include('components.cnpj.tags')
+    @include('components.cnpj.tags', ['data' => $data])
 @endpush
 
 
 @section('content')
 <div class="bg-gray-50 py-12">
     <div class="container mx-auto px-4">
-        <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-8 ">
             {{-- Coluna Principal de Conteúdo --}}
-            <main class="lg:col-span-8 space-y-8">
+            <main class="lg:col-span-8 mt-12 space-y-8">
                 <x-cnpj.intro-text :data="$data" />
                 <x-cnpj.informacoes-cnpj :data="$data" />
                 <x-cnpj.situacao-cadastral :data="$data" />

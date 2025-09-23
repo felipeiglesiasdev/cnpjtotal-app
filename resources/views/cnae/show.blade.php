@@ -5,12 +5,12 @@
 @endpush
 
 @section('content')
-<div class="bg-gray-50">
+<div class="bg-gray-50 ">
     <div class="container mx-auto px-6 lg:px-8 py-12">
         <div class="flex flex-col lg:flex-row lg:space-x-12">
 
             <!-- Conteúdo Principal -->
-            <main class="w-full lg:flex-1">
+            <main class="w-full lg:flex-1 mt-12">
 
                 {{-- Bloco de Informações do CNAE --}}
                 <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg border border-gray-100">

@@ -40,14 +40,14 @@
 <div class="relative bg-[#171717] text-white overflow-hidden">
     {{-- Container para as bolas da animação --}}
     <div class="absolute inset-0 z-0">
-        <div class="ball" style="left: 10%; width: 40px; height: 40px; animation-duration: 22s; animation-delay: 0s;"></div>
-        <div class="ball" style="left: 20%; width: 20px; height: 20px; animation-duration: 18s; animation-delay: 2s;"></div>
-        <div class="ball" style="left: 30%; width: 60px; height: 60px; animation-duration: 30s; animation-delay: 4s;"></div>
-        <div class="ball" style="left: 40%; width: 30px; height: 30px; animation-duration: 15s; animation-delay: 1s;"></div>
-        <div class="ball" style="left: 50%; width: 80px; height: 80px; animation-duration: 20s; animation-delay: 5s;"></div>
-        <div class="ball" style="left: 60%; width: 25px; height: 25px; animation-duration: 25s; animation-delay: 3s;"></div>
+        <div class="ball" style="left: 10%; width: 40px; height: 40px; animation-duration: 14s; animation-delay: 0s;"></div>
+        <div class="ball" style="left: 20%; width: 20px; height: 20px; animation-duration: 12s; animation-delay: 2s;"></div>
+        <div class="ball" style="left: 30%; width: 60px; height: 60px; animation-duration: 21s; animation-delay: 4s;"></div>
+        <div class="ball" style="left: 40%; width: 30px; height: 30px; animation-duration: 13s; animation-delay: 1s;"></div>
+        <div class="ball" style="left: 50%; width: 80px; height: 80px; animation-duration: 20; animation-delay: 5s;"></div>
+        <div class="ball" style="left: 60%; width: 25px; height: 25px; animation-duration: 14s; animation-delay: 3s;"></div>
         <div class="ball" style="left: 70%; width: 45px; height: 45px; animation-duration: 19s; animation-delay: 6s;"></div>
-        <div class="ball" style="left: 80%; width: 55px; height: 55px; animation-duration: 28s; animation-delay: 8s;"></div>
+        <div class="ball" style="left: 80%; width: 55px; height: 55px; animation-duration: 23s; animation-delay: 8s;"></div>
         <div class="ball" style="left: 90%; width: 35px; height: 35px; animation-duration: 16s; animation-delay: 7s;"></div>
     </div>
 
@@ -60,10 +60,10 @@
             Acesse dados públicos e atualizados da Receita Federal de maneira gratuita, rápida e sem complicações.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="#" class="w-full sm:w-auto bg-[#ed1c24] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-[#c11b21] transition-all transform hover:scale-105 duration-300 shadow-lg">
+            <a href="{{ route('cnpj.index') }}" class="w-full sm:w-auto bg-[#ed1c24] text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-[#c11b21] transition-all transform hover:scale-105 duration-300 shadow-lg">
                 <i class="bi bi-search mr-2"></i> Consultar CNPJ
             </a>
-            <a href="#" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-600 transition-all transform hover:scale-105 duration-300">
+            <a href="{{ route('cnae.index') }}" class="w-full sm:w-auto bg-gray-700 text-white font-bold py-3 px-8 rounded-full text-lg hover:bg-gray-600 transition-all transform hover:scale-105 duration-300">
                 Consultar CNAE
             </a>
         </div>
