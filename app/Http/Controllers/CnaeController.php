@@ -10,13 +10,6 @@ use Illuminate\View\View;
 
 class CnaeController extends Controller
 {
-    /**
-     * Exibe a página de busca de CNAE.
-     */
-    public function index(): View
-    {
-        return view('pages.consultar-cnae');
-    }
 
     /**
      * Realiza a busca de CNAEs em tempo real para o formulário.

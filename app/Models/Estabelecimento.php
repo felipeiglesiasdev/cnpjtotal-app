@@ -84,8 +84,39 @@ class Estabelecimento extends Model // DEFINIÇÃO DA CLASSE ESTABELECIMENTO
         return $cnpj;
     }
 
+    public function getCnpjCompletoAttribute(): string
+    {
+        $cnpj = $this->cnpj_basico . $this->cnpj_ordem . $this->cnpj_dv;
+        return $cnpj;
+    }
+
+    public function getCnpjCompletoFormatadoAttribute(): string
+    {
+        $cnpj = $this->cnpj_basico . $this->cnpj_ordem . $this->cnpj_dv;
+        if (strlen($cnpj) == 14) {
+            return vsprintf('%s.%s.%s/%s-%s', [
+                substr($cnpj, 0, 2), substr($cnpj, 2, 3), substr($cnpj, 5, 3),
+                substr($cnpj, 8, 4), substr($cnpj, 12, 2)
+            ]);
+        }
+        return $cnpj;
+    }
+
     public function municipio(): BelongsTo
     {
         return $this->belongsTo(Municipio::class, 'municipio', 'codigo');
+    }
+
+    public function getCepFormatadoAttribute(): ?string
+    {
+        $cep = $this->cep;
+        if (!$cep || strlen($cep) < 8) {
+            return $cep; // Retorna como está se for inválido
+        }
+        // Formato: XXXXX-XXX
+        return sprintf('%s-%s',
+            substr($cep, 0, 5),
+            substr($cep, 5, 3)
+        );
     }
 }

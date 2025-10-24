@@ -1,6 +1,4 @@
 @import 'tailwindcss';
-@import url('https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
@@ -8,7 +6,7 @@
 
 
 @theme {
-    --font-sans: "Funnel Sans";
+    --font-sans: "Inclusive Sans";
 }
 
 

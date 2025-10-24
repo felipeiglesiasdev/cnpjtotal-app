@@ -55,4 +55,14 @@ class Empresa extends Model // DEFINIÇÃO DA CLASSE EMPRESA
     {
         return $this->belongsTo(QualificacaoSocio::class, 'qualificacao_responsavel', 'codigo'); // RETORNA O RELACIONAMENTO
     }
+    
+    public function getCapitalSocialFormatadoAttribute(): ?string
+    {
+        $valor = $this->capital_social;
+        if (is_null($valor) || !is_numeric($valor)) {
+            return 'N/A'; // Ou null, ou 'Não informado'
+        }
+        // Formata como R$ 1.234,56
+        return 'R$ ' . number_format($valor, 2, ',', '.');
+    }
 }
