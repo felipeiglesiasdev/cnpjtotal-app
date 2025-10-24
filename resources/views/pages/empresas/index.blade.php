@@ -25,9 +25,6 @@
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-16">
             <div>
-                <x-empresas.por-natureza-juridica :naturezas="$porNaturezaJuridica" />
-            </div>
-            <div>
                 <x-empresas.stats-abertas-fechadas :abertas="$statsAbertas" :fechadas="$statsFechadas" />
             </div>
         </div>

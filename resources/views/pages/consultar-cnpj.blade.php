@@ -3,120 +3,172 @@
 @section('title', 'Consulta de CNPJ Grátis — Rápido e Completo')
 
 @push('seo_tags')
-    <meta name="description" content="Utilize nossa ferramenta gratuita para consultar informações completas de qualquer empresa no Brasil, diretamente da Receita Federal.">
+    <meta name="description" content="Utilize nossa ferramenta gratuita para consultar informações completas de qualquer empresa no Brasil, diretamente da Receita Federal. Rápido, seguro e sempre atualizado.">
+    {{-- Outras meta tags relevantes podem ser adicionadas aqui --}}
 @endpush
 
 @section('content')
-{{-- Seção Principal com Formulário --}}
-<section class="bg-white pt-10">
-    <div class="container mx-auto px-6 py-16 md:py-24">
-        <div class="grid lg:grid-cols-2 gap-16 items-center">
-            {{-- Coluna de Conteúdo e Formulário --}}
-            <div class="text-center lg:text-left">
-                <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
-                    Consulta de CNPJ Gratuita e Instantânea
-                </h1>
-                <p class="text-lg text-gray-600 mb-8 max-w-lg mx-auto lg:mx-0">
-                    Acesse dados públicos e atualizados da Receita Federal de maneira simples, rápida e sem complicações.
-                </p>
+{{-- Seção Hero com Formulário --}}
+<section class="relative bg-white pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
+    {{-- Elementos sutis de fundo --}}
+    <div class="absolute inset-0 z-0">
+         <div class="absolute -top-20 -left-20 w-80 h-80 bg-red-50/50 rounded-full filter blur-3xl opacity-60"></div>
+         <div class="absolute -bottom-20 -right-20 w-80 h-80 bg-gray-100/60 rounded-full filter blur-3xl opacity-70"></div>
+    </div>
 
-                <form class="max-w-lg mx-auto lg:mx-0" action="{{ route('cnpj.consultar') }}" method="POST" novalidate>
-                    @csrf
-                    <div class="relative flex flex-col sm:flex-row items-center gap-3">
-                        <div class="relative w-full">
-                           <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                               <i class="bi bi-search text-gray-400"></i>
-                           </div>
-                            <input 
-                                type="tel" 
-                                name="cnpj" 
-                                id="cnpj-input" 
-                                class="w-full text-lg pl-12 pr-4 py-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-[#ed1c24]/50 focus:border-[#ed1c24] transition-colors duration-300" 
-                                placeholder="00.000.000/0000-00"
-                                required>
-                        </div>
-                        <button type="submit" class="cursor-pointer w-full sm:w-auto flex-shrink-0 bg-[#ed1c24] text-white font-bold py-4 px-8 rounded-lg text-lg hover:bg-[#c11b21] hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-[#ed1c24]/50 flex items-center justify-center gap-2">
-                            <span>Consultar</span>
-                            <i class="bi bi-arrow-right"></i>
-                        </button>
+    <div class="relative container mx-auto px-4 z-10">
+        <div class="max-w-3xl mx-auto text-center">
+            <span class="text-sm font-semibold text-[#ed1c24] uppercase tracking-wider mb-2 inline-block">Consulta Gratuita e Ilimitada</span>
+            <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 mb-5 tracking-tight leading-tight">
+                Consulte qualquer CNPJ <br class="hidden sm:inline"> Instantaneamente
+            </h1>
+            <p class="text-lg text-gray-700 mb-10 max-w-xl mx-auto font-light">
+                Acesse dados cadastrais completos, situação, QSA, CNAEs e mais. Informações públicas da Receita Federal na palma da sua mão.
+            </p>
+
+            <form class="max-w-xl mx-auto" action="{{ route('cnpj.consultar') }}" method="POST" novalidate>
+                @csrf
+                <div class="relative flex flex-col sm:flex-row items-center gap-3 bg-white p-2 rounded-full shadow-lg border border-gray-200">
+                    <div class="relative w-full">
+                       <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none z-10">
+                           <i class="bi bi-search text-gray-400 text-lg"></i>
+                       </div>
+                        <input
+                            type="tel"
+                            name="cnpj"
+                            id="cnpj-input"
+                            class="w-full text-lg pl-14 pr-4 py-4 border-none rounded-full focus:ring-2 focus:ring-[#ed1c24]/50 focus:outline-none placeholder-gray-500"
+                            placeholder="Digite o CNPJ"
+                            required>
                     </div>
-                </form>
-
-                <div class="mt-10 text-gray-500 text-sm">
-                    <p><strong><i class="bi bi-shield-check-fill text-green-500"></i> Dados Seguros e Confiáveis:</strong> Nossa plataforma se conecta diretamente com as bases de dados da Receita Federal.</p>
+                    {{-- Botão Padronizado --}}
+                    <button type="submit"
+                            class="cursor-pointer w-full sm:w-auto flex-shrink-0 bg-[#171717] text-white font-medium py-4 px-8 rounded-full text-base hover:bg-[#ed1c24] transition-all duration-300 ease-out hover:-translate-y-px transform relative z-10">
+                        <span>Consultar Agora</span>
+                        <i class="bi bi-arrow-right ml-2"></i>
+                    </button>
                 </div>
-            </div>
+            </form>
 
-            {{-- Coluna de Imagem/Ilustração --}}
-            <div class="hidden lg:block h-full">
-                <img src="{{ asset('images/consulta-cnpj.png') }}" alt="Ilustração de dados empresariais" class="h-full" width="500" >
+            <div class="mt-8 text-gray-500 text-xs flex items-center justify-center gap-4">
+                <span><i class="bi bi-shield-check-fill text-green-600 mr-1"></i> Dados Públicos Oficiais</span>
+                <span><i class="bi bi-clock-fill text-blue-600 mr-1"></i> Consulta Rápida</span>
+                <span><i class="bi bi-infinity text-purple-600 mr-1"></i> 100% Gratuito</span>
             </div>
         </div>
     </div>
 </section>
 
-{{-- Seção de Vantagens/Recursos Adicionais --}}
-<section class="py-16 bg-gray-50">
-    <div class="container mx-auto px-6">
-        <div class="grid md:grid-cols-3 gap-8">
-            <div class="text-center p-8 bg-white rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 transform">
-                <div class="flex items-center justify-center h-16 w-16 rounded-full bg-red-100 text-[#ed1c24] mx-auto mb-5">
-                    <i class="bi bi-database-check text-3xl"></i>
+{{-- Seção de Vantagens/Recursos (Padrão Home Consultas) --}}
+<section class="py-16 md:py-24 bg-gray-50">
+    <div class="container mx-auto px-4">
+        {{-- Grid de Cards de Consulta --}}
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
+
+            {{-- Card 1: Dados Completos --}}
+            <div class="group relative bg-white border border-gray-200 rounded-xl shadow-lg pt-20 pb-10 px-8 text-center transition-all duration-300 hover:shadow-2xl hover:border-gray-300 hover:-translate-y-2">
+                <div class="absolute -top-6 left-8">
+                    <div class="inline-block bg-[#ed1c24] p-4 rounded-full shadow-lg transition-transform duration-300 group-hover:scale-110">
+                        <i class="bi bi-database-check text-2xl text-white block"></i>
+                    </div>
                 </div>
-                <h3 class="text-xl font-semibold mb-3">Dados Completos</h3>
-                <p class="text-gray-600">Acesse quadro societário, atividades (CNAEs), situação cadastral, capital social e muito mais.</p>
+                <h3 class="text-2xl font-semibold text-gray-800 mb-3 mt-4">Dados Abrangentes</h3>
+                <p class="text-gray-700 text-base mb-8 font-light leading-relaxed">
+                    Acesse QSA, CNAEs (principal e secundários), situação, capital social, endereço, contato e mais.
+                </p>
             </div>
-            <div class="text-center p-8 bg-white rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 transform">
-                <div class="flex items-center justify-center h-16 w-16 rounded-full bg-red-100 text-[#ed1c24] mx-auto mb-5">
-                    <i class="bi bi-lightbulb text-3xl"></i>
+
+            {{-- Card 2: Interface Intuitiva --}}
+            <div class="group relative bg-white border border-gray-200 rounded-xl shadow-lg pt-20 pb-10 px-8 text-center transition-all duration-300 hover:shadow-2xl hover:border-gray-300 hover:-translate-y-2">
+                 <div class="absolute -top-6 left-8">
+                    <div class="inline-block bg-[#ed1c24] p-4 rounded-full shadow-lg transition-transform duration-300 group-hover:scale-110">
+                        <i class="bi bi-lightbulb text-2xl text-white block"></i>
+                    </div>
                 </div>
-                <h3 class="text-xl font-semibold mb-3">Interface Intuitiva</h3>
-                <p class="text-gray-600">Navegue facilmente pelas informações com um design limpo e organizado para focar no que importa.</p>
+                <h3 class="text-2xl font-semibold text-gray-800 mb-3 mt-4">Simples de Usar</h3>
+                <p class="text-gray-700 text-base mb-8 font-light leading-relaxed">
+                    Design limpo e organizado para você encontrar a informação que precisa sem distrações.
+                </p>
             </div>
-            <div class="text-center p-8 bg-white rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 transform">
-                <div class="flex items-center justify-center h-16 w-16 rounded-full bg-red-100 text-[#ed1c24] mx-auto mb-5">
-                     <i class="bi bi-gift text-3xl"></i>
+
+            {{-- Card 3: Sempre Gratuito --}}
+            <div class="group relative bg-white border border-gray-200 rounded-xl shadow-lg pt-20 pb-10 px-8 text-center transition-all duration-300 hover:shadow-2xl hover:border-gray-300 hover:-translate-y-2">
+                 <div class="absolute -top-6 left-8">
+                    <div class="inline-block bg-[#ed1c24] p-4 rounded-full shadow-lg transition-transform duration-300 group-hover:scale-110">
+                        <i class="bi bi-infinity text-2xl text-white block"></i>
+                    </div>
                 </div>
-                <h3 class="text-xl font-semibold mb-3">Sempre Gratuito</h3>
-                <p class="text-gray-600">Acreditamos no acesso livre à informação. Nossas consultas essenciais são e sempre serão gratuitas.</p>
+                <h3 class="text-2xl font-semibold text-gray-800 mb-3 mt-4">Gratuito e Ilimitado</h3>
+                <p class="text-gray-700 text-base mb-8 font-light leading-relaxed">
+                    Consulte quantos CNPJs precisar, sem custos ou limites. A informação pública deve ser acessível.
+                </p>
             </div>
+
         </div>
     </div>
 </section>
 
-{{-- Seção de Perguntas Frequentes (FAQ) --}}
+{{-- Seção de Perguntas Frequentes (FAQ) (Padrão Estado) --}}
 <section class="py-16 md:py-24 bg-white">
-    <div class="container mx-auto px-6">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Perguntas Frequentes</h2>
-            <p class="text-gray-600 mt-2 text-lg">Tudo o que você precisa saber sobre nosso serviço.</p>
-        </div>
-        <div class="max-w-3xl mx-auto" x-data="{ open: 1 }">
-            <div class="border-b border-gray-200">
-                <button @click="open = (open === 1 ? 0 : 1)" class="w-full text-left py-4 px-2 flex justify-between items-center focus:outline-none">
-                    <span class="text-lg font-medium text-gray-800">A consulta de CNPJ é segura e legal?</span>
-                    <i class="bi transition-transform duration-300" :class="open === 1 ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
-                </button>
-                <div x-show="open === 1" x-collapse class="pt-2 pb-4 px-2">
-                    <p class="text-gray-600">Sim. Todos os dados são públicos e fornecidos pela Receita Federal, em conformidade com o Decreto Nº 8.777/16 e a Lei de Acesso à Informação.</p>
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+            {{-- Card principal com padding padronizado --}}
+            <div x-data="{ openFaq: 1 }" class="bg-white border border-gray-200 rounded-lg shadow-sm p-6 md:p-8">
+                {{-- Cabeçalho Padrão --}}
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 flex-shrink-0 mr-4 flex items-center justify-center bg-red-100 rounded-full">
+                        <i class="bi bi-patch-question-fill text-2xl text-[#ed1c24]"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Perguntas Frequentes</h2>
+                        <p class="text-sm text-gray-500">Tire suas dúvidas sobre a consulta de CNPJ.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="border-b border-gray-200">
-                <button @click="open = (open === 2 ? 0 : 2)" class="w-full text-left py-4 px-2 flex justify-between items-center focus:outline-none">
-                    <span class="text-lg font-medium text-gray-800">Com que frequência os dados são atualizados?</span>
-                    <i class="bi transition-transform duration-300" :class="open === 2 ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
-                </button>
-                <div x-show="open === 2" x-collapse class="pt-2 pb-4 px-2">
-                    <p class="text-gray-600">Nossa plataforma busca as informações em tempo real diretamente da base de dados oficial, garantindo que você sempre tenha acesso aos dados mais recentes disponíveis.</p>
-                </div>
-            </div>
-            <div class="border-b border-gray-200">
-                <button @click="open = (open === 3 ? 0 : 3)" class="w-full text-left py-4 px-2 flex justify-between items-center focus:outline-none">
-                    <span class="text-lg font-medium text-gray-800">Posso consultar um CNPJ que já foi baixado?</span>
-                    <i class="bi transition-transform duration-300" :class="open === 3 ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
-                </button>
-                <div x-show="open === 3" x-collapse class="pt-2 pb-4 px-2">
-                    <p class="text-gray-600">Com certeza. Nossa ferramenta exibe a situação cadastral atual da empresa, seja ela "ATIVA", "BAIXADA", "SUSPENSA" ou qualquer outro status registrado na Receita Federal.</p>
+
+                <div class="space-y-4">
+                    {{-- Pergunta 1 --}}
+                    <div class="border-b border-gray-200 pb-4 group">
+                        <button @click="openFaq = (openFaq === 1 ? null : 1)" class="flex justify-between items-center w-full text-left cursor-pointer">
+                            <span class="font-semibold text-gray-800 text-base md:text-lg group-hover:text-[#ed1c24] transition-colors duration-200">De onde vêm os dados da consulta?</span>
+                            <i class="bi" :class="openFaq === 1 ? 'bi-chevron-up text-red-600' : 'bi-chevron-down text-gray-500'"></i>
+                        </button>
+                        <div x-show="openFaq === 1" x-collapse class="mt-3 text-gray-600 text-sm leading-relaxed">
+                            <p>Todas as informações exibidas são dados públicos oficiais, disponibilizados pela <strong class="font-medium">Receita Federal do Brasil</strong>. Nosso papel é organizar e apresentar esses dados de forma clara e acessível.</p>
+                        </div>
+                    </div>
+
+                    {{-- Pergunta 2 --}}
+                    <div class="border-b border-gray-200 pb-4 group">
+                        <button @click="openFaq = (openFaq === 2 ? null : 2)" class="flex justify-between items-center w-full text-left cursor-pointer">
+                            <span class="font-semibold text-gray-800 text-base md:text-lg group-hover:text-[#ed1c24] transition-colors duration-200">A consulta é realmente gratuita?</span>
+                            <i class="bi" :class="openFaq === 2 ? 'bi-chevron-up text-red-600' : 'bi-chevron-down text-gray-500'"></i>
+                        </button>
+                        <div x-show="openFaq === 2" x-collapse class="mt-3 text-gray-600 text-sm leading-relaxed">
+                            <p>Sim, a consulta básica de informações cadastrais do CNPJ em nosso site é <strong class="font-medium">100% gratuita e ilimitada</strong>. Acreditamos no livre acesso à informação pública.</p>
+                        </div>
+                    </div>
+
+                    {{-- Pergunta 3 --}}
+                     <div class="border-b border-gray-200 pb-4 group">
+                        <button @click="openFaq = (openFaq === 3 ? null : 3)" class="flex justify-between items-center w-full text-left cursor-pointer">
+                            <span class="font-semibold text-gray-800 text-base md:text-lg group-hover:text-[#ed1c24] transition-colors duration-200">Com que frequência os dados são atualizados?</span>
+                            <i class="bi" :class="openFaq === 3 ? 'bi-chevron-up text-red-600' : 'bi-chevron-down text-gray-500'"></i>
+                        </button>
+                        <div x-show="openFaq === 3" x-collapse class="mt-3 text-gray-600 text-sm leading-relaxed">
+                            <p>Atualizamos nossa base de dados periodicamente, <strong class="font-medium">geralmente a cada 3 meses</strong>, de acordo com a liberação dos arquivos públicos pela Receita Federal. Para dados em tempo real, consulte o site oficial.</p>
+                        </div>
+                    </div>
+
+                    {{-- Pergunta 4 --}}
+                    <div class="group"> {{-- Último item sem borda --}}
+                        <button @click="openFaq = (openFaq === 4 ? null : 4)" class="flex justify-between items-center w-full text-left cursor-pointer">
+                            <span class="font-semibold text-gray-800 text-base md:text-lg group-hover:text-[#ed1c24] transition-colors duration-200">Posso usar esses dados para fins comerciais?</span>
+                            <i class="bi" :class="openFaq === 4 ? 'bi-chevron-up text-red-600' : 'bi-chevron-down text-gray-500'"></i>
+                        </button>
+                        <div x-show="openFaq === 4" x-collapse class="mt-3 text-gray-600 text-sm leading-relaxed">
+                            <p>Os dados são públicos, mas seu uso deve respeitar a <strong class="font-medium">Lei Geral de Proteção de Dados (LGPD)</strong> e outras legislações aplicáveis. Oferecemos um <a href="{{ route('nossosServicos') }}" class="text-[#ed1c24] hover:underline font-medium">serviço especializado</a> para criação de listas de prospecção B2B qualificadas e em conformidade.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -125,8 +177,8 @@
 
 {{-- O componente do popup de erro será renderizado aqui se houver erro na sessão --}}
 @if(session('error'))
-    <x-popup-error 
-        message="{{ session('error') }}" 
+    <x-popup-error
+        message="{{ session('error') }}"
         title="Ocorreu um Erro"
     />
 @endif
@@ -146,14 +198,23 @@
 
             const form = cnpjInput.closest('form');
             if (form) {
-                form.addEventListener('submit', function() {
-                    mask.updateValue(); 
-                });
+                // Remove a máscara ANTES da validação do HTML5 e do envio
+                form.addEventListener('submit', function(event) {
+                    mask.updateValue(); // Atualiza o valor sem máscara
+                    // Se o campo for required e estiver vazio APÓS tirar a máscara (caso só tenha digitado máscara)
+                    if (cnpjInput.required && !cnpjInput.value) {
+                         // Você pode adicionar uma validação visual aqui se desejar
+                        // event.preventDefault(); // Impede o envio se estiver vazio após desmascarar
+                    }
+                }, true); // Use 'true' para capturar antes da validação do browser
             }
         }
     });
 </script>
-{{-- AlpineJS Collapse para o FAQ --}}
+{{-- AlpineJS Core e Collapse para o FAQ --}}
+{{-- Certifique-se que o Core está carregado antes do Collapse --}}
 <script src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+{{-- Se Alpine não estiver via npm, descomente a linha abaixo --}}
+{{-- <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
 @endpush
 

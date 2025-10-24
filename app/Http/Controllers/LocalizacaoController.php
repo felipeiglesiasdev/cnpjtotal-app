@@ -126,6 +126,7 @@ class LocalizacaoController extends Controller
         // #########################################################################################################
         // --- (NOVO) DADOS ESPECÍFICOS PARA O FAQ ---
         // #########################################################################################################
+        /*
         $faqDados = Cache::remember("{$cacheKeyBase}_faq_dados", now()->addDay(), function () use ($ufUpper, $nomeCapital, $ufLower) {
             // Contagem de Supermercados (CNAE 4711-3/02)
             $totalSupermercados = Estabelecimento::where('uf', $ufUpper)
@@ -168,7 +169,7 @@ class LocalizacaoController extends Controller
                 'slugCapital' => Str::slug($nomeCapital) // Passa o slug para gerar link no FAQ
             ];
         });
-
+        */
 
         // #########################################################################################################
         // --- TOP 10 CIDADES DESTE ESTADO ---
@@ -343,7 +344,7 @@ class LocalizacaoController extends Controller
             'balancoAnualEstado' => $balancoAnualEstado, 
             'cepsAleatorios' => $cepsAleatorios,
             'totalMunicipiosAtivos' => $totalMunicipiosAtivos,
-            'faqDados' => $faqDados, 
+            //'faqDados' => $faqDados, 
             'nomeCapital' => $nomeCapital, 
             'ufLower' => $ufLower,
         ]);

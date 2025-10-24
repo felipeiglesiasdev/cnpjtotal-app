@@ -35,8 +35,7 @@
             <x-empresas.estados.ceps-aleatorios-estado :ceps="$cepsAleatorios" :uf="$uf" :nomeEstado="$nomeEstado" :preposicao="$preposicao"/>
         </div>
         <div class="mt-12">
-            <x-empresas.estados.faq :nomeEstado="$nomeEstado" :preposicao="$preposicao" :ufLower="$ufLower" 
-            :nomeCapital="$nomeCapital" :kpis="$kpis" :top5Atividades="$top5Atividades" :faqDados="$faqDados" />
+           
         </div>
         <x-lgpd />
     </div>

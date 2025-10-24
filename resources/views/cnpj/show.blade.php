@@ -13,13 +13,19 @@
             <main class="lg:col-span-8 mt-12 space-y-8">
                 <x-cnpj.intro-text :data="$data" />
                 <x-cnpj.informacoes-cnpj :data="$data" />
+                <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+                         {{-- ATENÇÃO: Substitua '#' pelo seu link de afiliado --}}
+                         <a href="https://hostinger.com.br?REFERRALCODE=XOJFELIPEFOS" target="_blank" rel="nofollow sponsored" title="Anúncio Hostinger">
+                            <img src="{{ asset('images/ads-hostinger2.png') }}" alt="Anúncio Hostinger - Criador de Sites com IA" class="w-full h-auto">
+                        </a>
+</div>
                 <x-cnpj.situacao-cadastral :data="$data" />
                 <x-cnpj.atividades-economicas :data="$data" />
                 <x-cnpj.endereco :data="$data" />
                 <x-cnpj.contato :data="$data" />
                 <x-cnpj.qsa :data="$data" />
                 <x-cnpj.empresas-semelhantes :data="$data" />
-                <x-cnpj.remocao :data="$data" />
+                <x-lgpd />
             </main>
             
             {{-- Barra Lateral --}}
