@@ -17,7 +17,6 @@ class CachePortalTop10EstadosJob implements ShouldQueue
 
     public $timeout = 600;
     protected $cacheKey = 'portal_top_10_estados_t1';
-    protected $cacheDuration = 2880;
 
     public function handle(): void
     {
@@ -28,6 +27,6 @@ class CachePortalTop10EstadosJob implements ShouldQueue
             ->limit(10)
             ->get();
         
-        Cache::put($this->cacheKey, $dados, now()->addMinutes($this->cacheDuration));
+        Cache::put($this->cacheKey, $dados, now()->addMonths(2));
     }
 }

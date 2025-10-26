@@ -17,7 +17,6 @@ class CachePortalFechamentosJob implements ShouldQueue
 
     public $timeout = 600;
     protected $cacheKey = 'portal_estados_mais_fechamentos_2024_t1';
-    protected $cacheDuration = 2880;
 
     public function handle(): void
     {
@@ -29,6 +28,6 @@ class CachePortalFechamentosJob implements ShouldQueue
             ->limit(3)
             ->get();
         
-        Cache::put($this->cacheKey, $dados, now()->addMinutes($this->cacheDuration));
+        Cache::put($this->cacheKey, $dados, now()->addMonths(2));
     }
 }

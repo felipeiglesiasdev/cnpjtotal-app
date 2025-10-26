@@ -64,7 +64,7 @@ class CacheMunicipioJob implements ShouldQueue
 
         $totalParaPaginator = $totalEmpresasAtivas;
         $totalPagesToCache = ceil($totalParaPaginator / 50);
-        $cacheDuration = now()->addDays(7); 
+        $cacheDuration = now()->addMonths(2); 
 
         // 3. Loop para cachear CADA PÁGINA
         for ($page = 1; $page <= $totalPagesToCache; $page++) {

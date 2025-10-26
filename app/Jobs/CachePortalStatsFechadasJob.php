@@ -16,7 +16,6 @@ class CachePortalStatsFechadasJob implements ShouldQueue
 
     public $timeout = 600;
     protected $cacheKey = 'portal_stats_fechadas_por_ano_t1';
-    protected $cacheDuration = 2880;
 
     public function handle(): void
     {
@@ -29,6 +28,6 @@ class CachePortalStatsFechadasJob implements ShouldQueue
             $dados->put($ano, $total);
         }
         
-        Cache::put($this->cacheKey, $dados, now()->addMinutes($this->cacheDuration));
+        Cache::put($this->cacheKey, $dados, now()->addMonths(2));
     }
 }

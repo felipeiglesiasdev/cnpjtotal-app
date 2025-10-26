@@ -65,7 +65,7 @@ class CacheUfJob implements ShouldQueue
         $ufLower = strtolower($ufUpper); 
         
         $cacheKeyBase = "portal_estado_{$ufUpper}";
-        $cacheDuration = now()->addDays(7); 
+        $cacheDuration = now()->addMonths(2); 
         $nomeCapital = $this->capitais[$ufUpper] ?? 'Capital';
 
         // Datas

@@ -84,7 +84,7 @@ class CacheCepJob implements ShouldQueue
 
             // 3️⃣ Paginação simulada e cacheamento
             $totalPages = ceil($totalAtivos / 50);
-            $cacheDuration = now()->addDays(7);
+            $cacheDuration = now()->addMonths(2); 
 
             for ($page = 1; $page <= $totalPages; $page++) {
                 $cacheKey = "cep_{$cepLimpo}_page_{$page}";

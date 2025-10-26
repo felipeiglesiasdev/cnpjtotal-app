@@ -19,7 +19,6 @@ class CachePortalTop10CidadesJob implements ShouldQueue
 
     public $timeout = 600; // 10 minutos de timeout para o job
     protected $cacheKey = 'portal_top_10_cidades_t3';
-    protected $cacheDuration = 2880; // 48 horas (em minutos)
 
     public function __construct()
     {
@@ -47,6 +46,6 @@ class CachePortalTop10CidadesJob implements ShouldQueue
             ];
         });
 
-        Cache::put($this->cacheKey, $dados, now()->addMinutes($this->cacheDuration));
+        Cache::put($this->cacheKey, $dados, now()->addMonths(2));
     }
 }
