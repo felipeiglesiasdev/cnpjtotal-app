@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@push('seo_tags')
+    @include('components.empresas.municipios.tags', [
+        'nomeMunicipio' => $nomeMunicipio,
+        'nomeEstado' => $nomeEstado,
+        'uf' => $uf
+    ])
+@endpush
+
 @section('content')
 <div class="bg-white mt-16">
     <div class="container mx-auto px-4 py-12">

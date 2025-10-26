@@ -9,12 +9,10 @@
 <div class="bg-gray-50 py-12">
     <div class="container mx-auto px-4">
         <div class="lg:grid lg:grid-cols-12 lg:gap-8 ">
-            {{-- Coluna Principal de Conteúdo --}}
             <main class="lg:col-span-8 mt-12 space-y-8">
                 <x-cnpj.intro-text :data="$data" />
                 <x-cnpj.informacoes-cnpj :data="$data" />
                 <div class="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
-                         {{-- ATENÇÃO: Substitua '#' pelo seu link de afiliado --}}
                          <a href="https://hostinger.com.br?REFERRALCODE=XOJFELIPEFOS" target="_blank" rel="nofollow sponsored" title="Anúncio Hostinger">
                             <img src="{{ asset('images/ads-hostinger2.png') }}" alt="Anúncio Hostinger - Criador de Sites com IA" class="w-full h-auto">
                         </a>
@@ -55,6 +53,9 @@
                 </div>
             </aside>
         </div>
+        @if(session('error'))
+            <x-popup-error message="{{ session('error') }}" title="Ocorreu um Erro" />
+        @endif
     </div>
 </div>
 @endsection

@@ -60,7 +60,7 @@ $cnaesExemplo = [
                     Seu portal completo para consulta de CNPJ, CNAE e análise de dados empresariais no Brasil. Informações públicas da Receita Federal organizadas para você.
                 </p>
                  {{-- Link discreto do WhatsApp --}}
-                 <a href="https://wa.me/SEUNUMERO?text=Olá!"
+                 <a href="https://wa.me/5532998620167?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais..."
                     target="_blank"
                     rel="noopener nofollow"
                     class="mt-6 inline-flex items-center text-sm text-gray-400 hover:text-white transition-colors duration-200 group">

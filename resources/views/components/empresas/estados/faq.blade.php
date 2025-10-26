@@ -40,34 +40,34 @@ $ufUpper = strtoupper($ufLower); // Para consistência
             {{-- Tamanho da fonte aumentado (text-base md:text-lg), cursor-pointer adicionado --}}
             <button @click="openFaq = (openFaq === 1 ? null : 1)" class="flex justify-between items-center w-full text-left cursor-pointer group">
                 {{-- Cor do texto ajustada para #171717 / text-gray-800 --}}
-                <span class="font-semibold text-[#171717] group-hover:text-[#ED1C24] transition-colors text-base md:text-lg">Quais são as <strong class="font-bold">maiores empresas de {{ $nomeEstado }}</strong>?</span>
+                <span class="font-semibold text-[#171717] group-hover:text-[#ED1C24] transition-colors text-base md:text-lg">Quais são as <strong class="font-bold">maiores empresas {{ $preposicao }} {{ $nomeEstado }}</strong>?</span>
                 <i class="bi" :class="openFaq === 1 ? 'bi-chevron-up text-[#ED1C24]' : 'bi-chevron-down text-gray-500'"></i>
             </button>
             <div x-show="openFaq === 1" x-collapse class="mt-3 text-gray-800 text-base leading-relaxed">
-                 <p>Embora nossa plataforma não classifique as <strong class="font-medium">maiores empresas de {{ $nomeEstado }}</strong> por receita, você pode identificar negócios relevantes explorando a <strong class="font-medium">lista de empresas em {{ strtolower($ufUpper) }}</strong> nos municípios mais populosos, como a capital <strong class="font-medium">{{ $nomeCapital }}</strong> (que possui cerca de {{ formatarNumero($totalCapital) }} <strong class="font-medium">empresas ativas</strong>) ou analisando os setores econômicos predominantes.</p>
+                 <p>Embora nossa plataforma não classifique as <strong class="font-medium">maiores empresas de {{ $nomeEstado }}</strong> por receita, você pode identificar negócios relevantes explorando a <strong class="font-medium">lista de empresas {{ $preposicao }} {{ $nomeEstado }}</strong> nos municípios mais populosos, como a capital <strong class="font-medium">{{ $nomeCapital }}</strong> (que possui cerca de {{ formatarNumero($totalCapital) }} <strong class="font-medium">empresas ativas</strong>).</p>
             </div>
         </div>
 
         {{-- Pergunta 2: Supermercados --}}
         <div class="border-b border-gray-200 pb-4">
             <button @click="openFaq = (openFaq === 2 ? null : 2)" class="flex justify-between items-center w-full text-left cursor-pointer group">
-                <span class="font-semibold text-[#171717] group-hover:text-[#ED1C24] transition-colors text-base md:text-lg">Existem quantos <strong class="font-bold">supermercados em {{ $nomeEstado }}</strong>?</span>
+                <span class="font-semibold text-[#171717] group-hover:text-[#ED1C24] transition-colors text-base md:text-lg">Existem quantos <strong class="font-bold">supermercados no estado {{ $preposicao }} {{ $nomeEstado }}</strong>?</span>
                  <i class="bi" :class="openFaq === 2 ? 'bi-chevron-up text-[#ED1C24]' : 'bi-chevron-down text-gray-500'"></i>
             </button>
             <div x-show="openFaq === 2" x-collapse class="mt-3 text-gray-800 text-base leading-relaxed">
-                <p>O setor varejista é significativo {{ $preposicao }} {{ $nomeEstado }}. Atualmente, existem aproximadamente <strong class="font-medium">{{ formatarNumero($totalSupermercados) }} supermercados em {{ $nomeEstado }}</strong> registrados e ativos (CNAE 4711-3/02). Você pode encontrar uma <strong class="font-medium">lista de empresas em {{ strtolower($ufUpper) }}</strong> deste setor utilizando nossa ferramenta de busca por CNAE.</p>
+                <p>Atualmente, existem aproximadamente <strong class="font-medium">{{ formatarNumero($totalSupermercados) }} supermercados no estado {{ $preposicao }} {{ $nomeEstado }}</strong> registrados e ativos (CNAE 4711-3/02). Você pode encontrar uma <strong class="font-medium">lista de empresas</strong> deste setor utilizando nossa ferramenta de busca por CNAE.</p>
             </div>
         </div>
 
         {{-- Pergunta 3: Indústrias --}}
         <div class="border-b border-gray-200 pb-4">
             <button @click="openFaq = (openFaq === 3 ? null : 3)" class="flex justify-between items-center w-full text-left cursor-pointer group">
-                <span class="font-semibold text-[#171717] group-hover:text-[#ED1C24] transition-colors text-base md:text-lg">Existem quantas <strong class="font-bold">indústrias {{ $nomeEstado }}</strong>?</span>
+                <span class="font-semibold text-[#171717] group-hover:text-[#ED1C24] transition-colors text-base md:text-lg">Existem quantas <strong class="font-bold">indústrias no estado {{ $preposicao }} {{ $nomeEstado }}</strong>?</span>
                  <i class="bi" :class="openFaq === 3 ? 'bi-chevron-up text-[#ED1C24]' : 'bi-chevron-down text-gray-500'"></i>
             </button>
             <div x-show="openFaq === 3" x-collapse class="mt-3 text-gray-800 text-base leading-relaxed">
-                <p>O estado conta com um número expressivo de <strong class="font-medium">indústrias {{ $nomeEstado }}</strong>. Nossa contagem indica cerca de <strong class="font-medium">{{ formatarNumero($totalIndustrias) }} empresas ativas</strong> classificadas em CNAEs industriais (como extrativismo, transformação e construção). A principal atividade econômica registrada entre as <strong class="font-medium">empresas em {{ $nomeEstado }}</strong> é "{{ $top5Atividades->first()->descricao ?? 'N/A' }}".</p>
-                <p class="mt-1">Para explorar setores industriais específicos, utilize nossa <a href="{{ route('cnae.search') }}" class="text-[#ED1C24] hover:underline font-medium">consulta de CNAE</a>.</p>
+                <p>Nossa contagem indica cerca de <strong class="font-medium">{{ formatarNumero($totalIndustrias) }} empresas ativas</strong> classificadas em CNAEs industriais (como extrativismo, transformação e construção). A principal atividade econômica registrada entre as <strong class="font-medium">empresas no estado {{ $preposicao }} {{ $nomeEstado }}</strong> é "{{ $top5Atividades->first()->descricao ?? 'N/A' }}".</p>
+                <p class="mt-1">Para explorar setores industriais específicos, utilize nossa <a href="{{ route('cnae.index') }}" class="text-[#ED1C24] hover:underline font-medium">consulta de CNAE</a>.</p>
             </div>
         </div>
 
@@ -99,7 +99,7 @@ $ufUpper = strtoupper($ufLower); // Para consistência
                  <i class="bi" :class="openFaq === 5 ? 'bi-chevron-up text-[#ED1C24]' : 'bi-chevron-down text-gray-500'"></i>
             </button>
             <div x-show="openFaq === 5" x-collapse class="mt-3 text-gray-800 text-base leading-relaxed">
-                 <p>Nossa base de dados sobre <strong class="font-medium">empresas em {{ strtolower($ufUpper) }}</strong> é atualizada periodicamente com informações públicas da Receita Federal. Embora busquemos a maior precisão possível para a <strong class="font-medium">lista de empresas em {{ $nomeEstado }}</strong>, pode haver um intervalo entre a atualização oficial e a nossa. Para dados 100% atualizados ou validação oficial, consulte diretamente a Receita Federal ou a Junta Comercial {{ $preposicao }} {{ $nomeEstado }}.</p>
+                 <p>Nossa base de dados sobre <strong class="font-medium">empresas</strong> é atualizada periodicamente com informações públicas da Receita Federal. Embora busquemos a maior precisão possível para a <strong class="font-medium">lista de empresas em {{ $nomeEstado }}</strong>, pode haver um intervalo entre a atualização oficial e a nossa. Para dados 100% atualizados ou validação oficial, consulte diretamente a Receita Federal ou a Junta Comercial {{ $preposicao }} {{ $nomeEstado }}.</p>
             </div>
         </div>
 

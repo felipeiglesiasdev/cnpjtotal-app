@@ -12,14 +12,16 @@
                 <h2 class="text-xl font-bold text-gray-800 mb-1">Raio-X {{ $preposicao }} {{ $nomeEstado }}</h2>
                 <p class="text-sm text-gray-500 mb-4">Um resumo dos dados empresariais {{ $preposicao }} estado.</p>
 
-                <div class="grid grid-cols-2 gap-4">
+                {{-- ################################################## --}}
+                {{-- AJUSTE AQUI: grid-cols-1 por padrão, md:grid-cols-2 para telas médias+ --}}
+                {{-- ################################################## --}}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {{-- Total Ativas --}}
                     <div class="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-100">
                         <div class="w-8 h-8 flex-shrink-0 mr-3 flex items-center justify-center bg-green-100 rounded-full">
                             <i class="bi bi-building-check text-lg text-green-700"></i>
                         </div>
                         <div>
-                            {{-- Tamanho da fonte reduzido --}}
                             <div class="text-2xl font-bold text-gray-800">{{ number_format($kpis->total_ativas, 0, ',', '.') }}</div>
                             <div class="text-xs font-medium text-gray-500">Empresas Ativas</div>
                         </div>
