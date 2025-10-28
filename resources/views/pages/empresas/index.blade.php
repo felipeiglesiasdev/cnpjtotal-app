@@ -5,10 +5,11 @@
 <div class="bg-white mt-16">
     <div class="container mx-auto px-4 py-12">
         <div class="mt-16">
+            <x-empresas.todos-os-estados />
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
             <div class="lg:col-span-1">
-                 
+                
             </div>
             <div class="lg:col-span-1">
                 <x-empresas.top-10-estados :estados="$top10Estados" /> 
