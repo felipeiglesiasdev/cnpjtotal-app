@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'Portal de Análise de Empresas do Brasil')
-@section('description', 'Explore dados e estatísticas de CNPJs. Encontre empresas por estado, cidade, atividade econômica, data de abertura e muito mais.')
 
 @section('content')
 <div class="bg-white mt-16">

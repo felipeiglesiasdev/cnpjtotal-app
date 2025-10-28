@@ -52,8 +52,8 @@ class CacheCepJob implements ShouldQueue
             }
 
             // 1️⃣ Busca o primeiro estabelecimento ativo para metadados
-            $primeiro = Estabelecimento::where('cep', $cepLimpo)
-                ->where('situacao_cadastral', 2)
+            $primeiro = Estabelecimento::where('situacao_cadastral', 2)
+                ->where('cep', $cepLimpo)
                 ->select('uf', 'municipio')
                 ->first();
 
@@ -72,10 +72,10 @@ class CacheCepJob implements ShouldQueue
             $cepFormatado = substr($cepLimpo, 0, 5) . '-' . substr($cepLimpo, 5, 3);
 
             // 2️⃣ Conta empresas ativas
-            $totalAtivos = Estabelecimento::where('cep', $cepLimpo)
-                ->where('uf', $ufUpper)
+            $totalAtivos = Estabelecimento::where('uf', $ufUpper)
                 ->where('municipio', $codigoMunicipio)
                 ->where('situacao_cadastral', 2)
+                ->where('cep', $cepLimpo)
                 ->count();
 
             if ($totalAtivos === 0) {
@@ -101,10 +101,10 @@ class CacheCepJob implements ShouldQueue
                     $page,
                     $totalAtivos
                 ) {
-                    $items = Estabelecimento::where('cep', $cepLimpo)
-                        ->where('uf', $ufUpper)
+                    $items = Estabelecimento::where('uf', $ufUpper)
                         ->where('municipio', $codigoMunicipio)
                         ->where('situacao_cadastral', 2)
+                        ->where('cep', $cepLimpo)
                         ->with('empresa:cnpj_basico,razao_social,capital_social')
                         ->select('cnpj_basico', 'cnpj_ordem', 'cnpj_dv', 'cep')
                         ->forPage($page, 50)

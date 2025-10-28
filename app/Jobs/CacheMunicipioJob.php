@@ -55,7 +55,6 @@ class CacheMunicipioJob implements ShouldQueue
         // 2. Conta o total de empresas ATIVAS (como você pediu)
         $totalEmpresasAtivas = Estabelecimento::where('uf', $ufUpper)
             ->where('municipio', $municipio->codigo)
-            ->where('uf', $ufUpper)
             ->where('situacao_cadastral', '2') 
             ->count();
 

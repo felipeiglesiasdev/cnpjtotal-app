@@ -17,9 +17,6 @@
         ]
     ];
 
-    foreach ($regioes as &$estados) {
-        ksort($estados);
-    }
 @endphp
 
 <div id="todos-os-estados" class="bg-white rounded-lg p-6 sm:p-8 scroll-mt-24">

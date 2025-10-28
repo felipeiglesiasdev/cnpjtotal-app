@@ -117,8 +117,8 @@ class CacheUfJob implements ShouldQueue
         if ($municipioCapital) {
              $codigoMunicipioCapital = $municipioCapital->codigo;
              $totalCapital = Estabelecimento::where('uf', $ufUpper)
-                ->where('situacao_cadastral', 2)
                 ->where('municipio', $codigoMunicipioCapital)
+                ->where('situacao_cadastral', 2)
                 ->count();
         }
         $faqDados = (object) [
@@ -170,12 +170,17 @@ class CacheUfJob implements ShouldQueue
             ->distinct()->inRandomOrder()->limit(6)->pluck('municipio');
         $dadosCeps = collect();
         foreach ($municipiosRand as $municipio) {
-            $cepAleatorio = Estabelecimento::select('cep')->where('uf', $ufUpper)->where('municipio', $municipio)
-                ->where('situacao_cadastral', 2)->whereNotNull('cep')->where('cep', '!=', '')
+            $cepAleatorio = Estabelecimento::select('cep')
+                ->where('uf', $ufUpper)
+                ->where('municipio', $municipio)
+                ->where('situacao_cadastral', 2)
                 ->inRandomOrder()->first();
             if ($cepAleatorio) {
                 $cep = $cepAleatorio->cep;
-                $cnpjs = Estabelecimento::where('cep', $cep)->where('situacao_cadastral', 2)->where('uf', $ufUpper)->where('municipio', $municipio)
+                $cnpjs = Estabelecimento::where('uf', $ufUpper)
+                    ->where('municipio', $municipio)
+                    ->where('situacao_cadastral', 2)
+                    ->where('cep', $cep)
                     ->with('empresa:cnpj_basico,razao_social')->select('cnpj_basico', 'cnpj_ordem', 'cnpj_dv', 'cep')->limit(5)->get();
                 if ($cnpjs->isNotEmpty()) {
                     $dadosCeps->put($cep, $cnpjs);
