@@ -186,7 +186,7 @@ class LocalizacaoController extends Controller
 
             // Armazena em cache para as próximas requisições
             Cache::put($cacheKey, $viewData, now()->addMonths(2));
-        }*/
+        }
 
         // Renderiza normalmente
         return view('pages.empresas.localizacao.municipios.index', $viewData);
