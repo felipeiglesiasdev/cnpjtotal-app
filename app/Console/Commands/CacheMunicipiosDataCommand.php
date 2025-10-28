@@ -16,7 +16,8 @@ class CacheMunicipiosDataCommand extends Command
     public function handle()
     {
         $this->info('Buscando TODOS os municípios que possuem estabelecimentos...');
-        $todosMunicipios = Municipio::has('estabelecimentos')->get();
+        //$todosMunicipios = Municipio::has('estabelecimentos')->get();
+        $todosMunicipios = Municipio::where('codigo', 4733)->get();
         $this->info("Encontrados " . $todosMunicipios->count() . " municípios. Disparando jobs...");
         $bar = $this->output->createProgressBar($todosMunicipios->count());
         $bar->start();

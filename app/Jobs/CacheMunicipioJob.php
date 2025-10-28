@@ -54,8 +54,8 @@ class CacheMunicipioJob implements ShouldQueue
 
         // 2. Conta o total de empresas ATIVAS (como você pediu)
         $totalEmpresasAtivas = Estabelecimento::where('uf', $ufUpper)
-            ->where('municipio', $municipio->codigo)
             ->where('situacao_cadastral', '2') 
+            ->where('municipio', $municipio->codigo)
             ->count();
 
 
@@ -75,8 +75,8 @@ class CacheMunicipioJob implements ShouldQueue
 
                 // Busca SOMENTE os 50 itens desta página
                 $itemsForThisPage = Estabelecimento::where('uf', $ufUpper)
-                    ->where('municipio', $municipio->codigo)
                     ->where('situacao_cadastral', 2)
+                    ->where('municipio', $municipio->codigo)
                     ->with('empresa:cnpj_basico,razao_social,capital_social') 
                     ->select('cnpj_basico', 'cnpj_ordem', 'cnpj_dv', 'cep')
                     ->forPage($page, 50) 

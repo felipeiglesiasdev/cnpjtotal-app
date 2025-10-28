@@ -36,3 +36,5 @@ CREATE INDEX idx_estab_uf_sit_municipio ON estabelecimentos(uf, situacao_cadastr
 CREATE INDEX idx_estab_uf_sit_mun_cep ON estabelecimentos(uf, situacao_cadastral, municipio, cep);
 
 
+-----------------------------------------------------------------------------------------
+CREATE INDEX idx_estab_municipio_uf ON estabelecimentos(municipio, uf);
