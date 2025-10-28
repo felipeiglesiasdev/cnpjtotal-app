@@ -117,8 +117,8 @@ class CacheUfJob implements ShouldQueue
         if ($municipioCapital) {
              $codigoMunicipioCapital = $municipioCapital->codigo;
              $totalCapital = Estabelecimento::where('uf', $ufUpper)
-                ->where('municipio', $codigoMunicipioCapital)
                 ->where('situacao_cadastral', 2)
+                ->where('municipio', $codigoMunicipioCapital)
                 ->count();
         }
         $faqDados = (object) [
@@ -172,14 +172,14 @@ class CacheUfJob implements ShouldQueue
         foreach ($municipiosRand as $municipio) {
             $cepAleatorio = Estabelecimento::select('cep')
                 ->where('uf', $ufUpper)
-                ->where('municipio', $municipio)
                 ->where('situacao_cadastral', 2)
+                ->where('municipio', $municipio)
                 ->inRandomOrder()->first();
             if ($cepAleatorio) {
                 $cep = $cepAleatorio->cep;
                 $cnpjs = Estabelecimento::where('uf', $ufUpper)
-                    ->where('municipio', $municipio)
                     ->where('situacao_cadastral', 2)
+                    ->where('municipio', $municipio)
                     ->where('cep', $cep)
                     ->with('empresa:cnpj_basico,razao_social')->select('cnpj_basico', 'cnpj_ordem', 'cnpj_dv', 'cep')->limit(5)->get();
                 if ($cnpjs->isNotEmpty()) {
