@@ -222,7 +222,7 @@ class CacheUfJob implements ShouldQueue
                     ->paginate(21, ['*'], 'page', $page); 
 
                 // Define o path (lendo do .env)
-                $municipiosPaginados->withPath(url("empresas/estado/{$ufLower}"));
+                $municipiosPaginados->withPath(url("empresas/{$ufLower}"));
 
                 Cache::put($cacheKey, $municipiosPaginados, $cacheDuration);
             }
