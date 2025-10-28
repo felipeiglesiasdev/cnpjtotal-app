@@ -143,7 +143,7 @@ class LocalizacaoController extends Controller
         // Busca no cache
         $viewData = Cache::get($cacheKey);
 
-        /*
+        
         // Caso o cache ainda não exista (ex: job não rodou ou expirou)
         if (!$viewData) {
             // Busca o município pelo slug
