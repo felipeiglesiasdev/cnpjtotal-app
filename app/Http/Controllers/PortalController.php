@@ -20,7 +20,7 @@ class PortalController extends Controller
         // BUSCA OS 10 ESTADOS COM MAIS EMPRESAS ATIVAS (LÊ DO CACHE).
         $top10Estados = Cache::get('portal_top_10_estados', collect());
         // BUSCA OS 3 ESTADOS QUE MAIS FECHARAM EMPRESAS NO ANO DE 2024 (LÊ DO CACHE).
-        $estadosMaisFechamentos = Cache::get('portal_estados_mais_fechamentos_2024', collect());
+        $estadosMaisFechamentos = Cache::get('portal_estados_mais_fechamentos', collect());
         // BUSCA AS 10 ATIVIDADES ECONÔMICAS MAIS COMUNS (LÊ DO CACHE).
         $top10Atividades = Cache::get('top_10_atividades', collect());
         // ESTATÍSTICAS DE EMPRESAS ABERTAS (ANO A ANO) (LÊ DO CACHE).
