@@ -42,6 +42,6 @@ class CachePortalTop10CidadesJob implements ShouldQueue
             ];
         });
 
-        Cache::put($this->cacheKey, $dados, now()->addMinutes($this->cacheDuration));
+        Cache::put($this->cacheKey, $dados, now()->addMonths(2));
     }
 }
