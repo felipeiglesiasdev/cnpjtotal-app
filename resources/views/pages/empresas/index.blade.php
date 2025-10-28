@@ -13,8 +13,10 @@
             </div>
         </div>
         <div class="mt-16">
+            <x-empresas.estados-mais-fechamentos :estados="$estadosMaisFechamentos" />
         </div>
         <div class="mt-16">
+            <x-empresas.top-10-atividades :atividades="$top10Atividades" />
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-16">
             <div>
