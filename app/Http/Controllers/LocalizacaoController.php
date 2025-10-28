@@ -147,14 +147,14 @@ class LocalizacaoController extends Controller
         // Caso o cache ainda não exista (ex: job não rodou ou expirou)
         if (!$viewData) {
             // Busca o município pelo slug
-            $municipio = \App\Models\Municipio::whereRaw('LOWER(REPLACE(descricao, " ", "-")) = ?', [$municipio_slug])->first();
+            $municipio = Municipio::whereRaw('LOWER(REPLACE(descricao, " ", "-")) = ?', [$municipio_slug])->first();
 
             if (!$municipio) {
                 abort(404, 'Município não encontrado');
             }
 
             // Descobre a UF real (garantindo consistência)
-            $firstEstab = \App\Models\Estabelecimento::where('municipio', $municipio->codigo)->select('uf')->first();
+            $firstEstab = Estabelecimento::where('municipio', $municipio->codigo)->select('uf')->first();
             if (!$firstEstab) {
                 abort(404, 'Nenhum estabelecimento encontrado para este município');
             }
@@ -169,7 +169,7 @@ class LocalizacaoController extends Controller
             ][$ufLower] ?? $ufUpper;
 
             $perPage = 50;
-            $query = \App\Models\Estabelecimento::where('uf', $ufUpper)
+            $query = Estabelecimento::where('uf', $ufUpper)
                 ->where('situacao_cadastral', 2)
                 ->where('municipio', $municipio->codigo)
                 ->with('empresa:cnpj_basico,razao_social,capital_social')
@@ -196,21 +196,54 @@ class LocalizacaoController extends Controller
     // LISTA DE EMPRESAS PARA UM CEP ESPECÍFICO.
     public function porCep($cep)
     {
+        // 1. Validação básica e Limpeza do CEP (remove não numéricos)
         $cepLimpo = preg_replace('/[^0-9]/', '', $cep);
-        $page = request()->get('page', 1);
-        $cacheKey = "cep_{$cepLimpo}_page_{$page}";
-        $viewData = Cache::get($cacheKey);
-        $estabelecimentos = $viewData['estabelecimentos'];
-        $cepFormatado = $viewData['cepFormatado'] ?? $cepLimpo;
+
+        
+        // 2. Busca o primeiro estabelecimento ativo para pegar dados de localização (UF, Município)
+        $primeiroEstabelecimento = Estabelecimento::where('cep', $cepLimpo)
+            ->where('situacao_cadastral', 2)
+            ->select('uf', 'municipio')
+            ->first();
+
+           /* 
+        $ufUpper = $primeiroEstabelecimento->uf;
+        $ufLower = strtolower($ufUpper);
+        $codigoMunicipio = $primeiroEstabelecimento->municipio;
+
+        // Busca nomes do estado e município
+        $nomeEstado = $this->estadosBrasileiros[$ufLower] ?? $ufUpper;
+        $municipio = Municipio::find($codigoMunicipio);
+        $nomeMunicipio = $municipio ? $municipio->descricao : 'Desconhecido';
+        $municipioSlug = $municipio ? Str::slug($nomeMunicipio) : null;
+
+
+        // 3. Busca as empresas ATIVAS neste CEP com paginação
+        $estabelecimentos = Estabelecimento::where('uf', $ufUpper)
+            ->where('situacao_cadastral', 2) 
+            ->where('municipio', $codigoMunicipio) 
+            ->where('cep', $cepLimpo)
+            ->with('empresa:cnpj_basico,razao_social,capital_social') 
+            ->select('cnpj_basico', 'cnpj_ordem', 'cnpj_dv', 'nome_fantasia', 'cep') 
+            ->paginate(50); 
+
+        // Ajusta o path da paginação
+        $estabelecimentos->withPath(route('portal.por-cep', ['cep' => $cepLimpo]));
+
+        // Formata o CEP para exibição
+        $cepFormatado = $estabelecimentos->isNotEmpty() ? $estabelecimentos->first()->cep_formatado : $cep;
+
+        */
+        // ENVIA OS DADOS PARA A VIEW
         return view('pages.empresas.localizacao.cep.index', [
-            'cep' => $cepLimpo,
-            'cepFormatado' => $cepFormatado,
-            'nomeMunicipio' => $viewData['nomeMunicipio'],
-            'municipioSlug' => $viewData['municipioSlug'],
-            'nomeEstado' => $viewData['nomeEstado'],
-            'uf' => $viewData['uf'],
-            'ufLower' => $viewData['ufLower'],
-            'estabelecimentos' => $estabelecimentos,
+            //'cep' => $cepLimpo,
+            //'cepFormatado' => $cepFormatado,
+            //'nomeMunicipio' => $nomeMunicipio,
+            //'municipioSlug' => $municipioSlug, // Para link no breadcrumb
+            //'nomeEstado' => $nomeEstado,
+            //'uf' => $ufUpper, // Passa UF maiúscula para consistência
+            //'ufLower' => $ufLower, // Passa UF minúscula para links
+            //'estabelecimentos' => $estabelecimentos,
         ]);
     }
 }
