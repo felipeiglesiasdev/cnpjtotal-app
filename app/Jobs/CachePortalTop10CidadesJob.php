@@ -23,29 +23,25 @@ class CachePortalTop10CidadesJob implements ShouldQueue
 
     public function handle(): void
     {
-        // CONSULTA COM ELOQUENT + JOIN OTIMIZADO
-        $dados = Estabelecimento::join('municipios', 'estabelecimentos.municipio', '=', 'municipios.codigo')
-            ->select(
-                'municipios.descricao as nome',
-                'estabelecimentos.uf',
-                DB::raw('COUNT(*) as total')
-            )
-            ->where('estabelecimentos.situacao_cadastral', 2)
-            ->groupBy('estabelecimentos.municipio', 'estabelecimentos.uf', 'municipios.descricao')
+        // LÓGICA MOVIDA DO CONTROLLER PARA CÁ
+        $topCidadesResult = Estabelecimento::with('municipioRel')
+            ->where('situacao_cadastral', 2)
+            ->select('municipio', 'uf', DB::raw('count(*) as total'))
+            ->groupBy('municipio', 'uf')
             ->orderBy('total', 'desc')
             ->limit(10)
-            ->get()
-            ->map(function ($item) {
-                return [
-                    'nome' => $item->nome,
-                    'uf' => $item->uf,
-                    'total' => (int) $item->total,
-                    'municipio_slug' => Str::slug($item->nome),
-                ];
-            });
+            ->get();
 
-        // CACHE POR 2 MESES (525600 minutos = 1 ano, 2 meses = 87600)
-        Cache::put($this->cacheKey, $dados, now()->addMinutes(87600));
+        $dados = $topCidadesResult->map(function ($item) {
+            $nome = $item->municipioRel->descricao ?? 'Não encontrado';
+            return (object) [
+                'nome' => $nome,
+                'uf' => $item->uf,
+                'total' => $item->total,
+                'municipio_slug' => Str::slug($nome),
+            ];
+        });
 
+        Cache::put($this->cacheKey, $dados, now()->addMinutes($this->cacheDuration));
     }
 }
