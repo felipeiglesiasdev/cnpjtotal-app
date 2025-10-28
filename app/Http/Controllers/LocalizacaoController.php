@@ -137,7 +137,24 @@ class LocalizacaoController extends Controller
         $ufLower = strtolower($uf);
         $page = request()->get('page', 1);
         $cacheKey = "municipio_{$ufLower}_{$municipio_slug}_page_{$page}";
-        $viewData = Cache::get($cacheKey); 
+        $viewData = Cache::get($cacheKey);
+
+        if (!$viewData) {
+            abort(404, 'Cache não encontrado');
+        }
+
+        // Recria o paginator leve (dinamicamente)
+        $paginator = new \Illuminate\Pagination\LengthAwarePaginator(
+            collect($viewData['estabelecimentos_raw']),
+            $viewData['total'] ?? count($viewData['estabelecimentos_raw']),
+            $viewData['per_page'],
+            $viewData['page'],
+            ['path' => $viewData['base_url']]
+        );
+
+        $viewData['estabelecimentos'] = $paginator;
+        unset($viewData['estabelecimentos_raw']);
+
         return view('pages.empresas.localizacao.municipios.index', $viewData);
     }
     // #########################################################################################################

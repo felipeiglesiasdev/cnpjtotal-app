@@ -39,67 +39,57 @@ class CacheMunicipioJob implements ShouldQueue
 
     public function handle(): void
     {
-        
         $municipio = $this->municipio;
         $cidade_slug = Str::slug($municipio->descricao);
-        
-        // 1. Pega o primeiro estabelecimento para descobrir a UF
-        $firstEstabelecimento = Estabelecimento::where('municipio', $municipio->codigo)->select('uf')->first();
-        if (!$firstEstabelecimento) return;
 
-        
-        $ufUpper = $firstEstabelecimento->uf;
+        // Buscar a UF de um estabelecimento qualquer
+        $first = Estabelecimento::where('municipio', $municipio->codigo)->select('uf')->first();
+        if (!$first) return;
+
+        $ufUpper = $first->uf;
         $ufLower = strtolower($ufUpper);
-        $nomeEstado = $this->estadosBrasileiros[$ufLower];
+        $nomeEstado = $this->estadosBrasileiros[$ufLower] ?? $ufUpper;
 
-        // 2. Conta o total de empresas ATIVAS (como você pediu)
+        // Total de empresas ativas
         $totalEmpresasAtivas = Estabelecimento::where('uf', $ufUpper)
-            ->where('situacao_cadastral', '2') 
+            ->where('situacao_cadastral', 2)
             ->where('municipio', $municipio->codigo)
             ->count();
 
-
         if ($totalEmpresasAtivas === 0) return;
 
-        $totalParaPaginator = $totalEmpresasAtivas;
-        $totalPagesToCache = ceil($totalParaPaginator / 50);
-        $cacheDuration = now()->addMonths(2); 
+        $perPage = 50;
+        $totalPages = ceil($totalEmpresasAtivas / $perPage);
+        $cacheDuration = now()->addMonths(2);
 
-        // 3. Loop para cachear CADA PÁGINA
-        for ($page = 1; $page <= $totalPagesToCache; $page++) {
-            
+        for ($page = 1; $page <= $totalPages; $page++) {
+
             $cacheKey = "municipio_{$ufLower}_{$cidade_slug}_page_{$page}";
 
-            // Usamos Cache::remember para ser mais robusto a falhas no meio
-            $viewData = Cache::remember($cacheKey, $cacheDuration, function () use ($ufUpper, $nomeEstado, $municipio, $page, $totalParaPaginator, $ufLower, $cidade_slug) {
-
-                // Busca SOMENTE os 50 itens desta página
-                $itemsForThisPage = Estabelecimento::where('uf', $ufUpper)
+            Cache::remember($cacheKey, $cacheDuration, function () use (
+                $ufUpper, $ufLower, $municipio, $page, $perPage, $nomeEstado, $cidade_slug
+            ) {
+                // Apenas os dados essenciais da página
+                $items = Estabelecimento::where('uf', $ufUpper)
                     ->where('situacao_cadastral', 2)
                     ->where('municipio', $municipio->codigo)
-                    ->with('empresa:cnpj_basico,razao_social,capital_social') 
+                    ->with('empresa:cnpj_basico,razao_social,capital_social')
                     ->select('cnpj_basico', 'cnpj_ordem', 'cnpj_dv', 'cep')
-                    ->forPage($page, 50) 
-                    ->get();
+                    ->forPage($page, $perPage)
+                    ->get()
+                    ->toArray(); // salva puro
 
-                // Cria manualmente o objeto Paginator
-                $estabelecimentosPaginados = new LengthAwarePaginator(
-                    $itemsForThisPage,
-                    $totalParaPaginator, // Total real
-                    50, // Itens por página
-                    $page, // Página atual
-                    // Garante que a URL base está correta (lendo do .env)
-                    ['path' => url("empresas/{$ufLower}/{$cidade_slug}")] 
-                );
-
-                // Monta o array de dados a ser cacheado
                 return [
                     'nomeMunicipio' => $municipio->descricao,
                     'nomeEstado' => $nomeEstado,
                     'uf' => $ufUpper,
-                    'estabelecimentos' => $estabelecimentosPaginados,
+                    'estabelecimentos_raw' => $items, // << só dados simples
+                    'page' => $page,
+                    'per_page' => $perPage,
+                    'total' => $municipio->estabelecimentos()->where('situacao_cadastral', 2)->count(),
+                    'base_url' => url("empresas/{$ufLower}/{$cidade_slug}"), // compatível com controller
                 ];
             });
-        } // Fim do loop de páginas
+        }
     }
 }
