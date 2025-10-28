@@ -136,25 +136,59 @@ class LocalizacaoController extends Controller
     {
         $ufLower = strtolower($uf);
         $page = request()->get('page', 1);
+
+        // Monta a mesma key usada pelo job
         $cacheKey = "municipio_{$ufLower}_{$municipio_slug}_page_{$page}";
+
+        // Busca no cache
         $viewData = Cache::get($cacheKey);
 
+        /*
+        // Caso o cache ainda não exista (ex: job não rodou ou expirou)
         if (!$viewData) {
-            abort(404, 'Cache não encontrado');
-        }
+            // Busca o município pelo slug
+            $municipio = \App\Models\Municipio::whereRaw('LOWER(REPLACE(descricao, " ", "-")) = ?', [$municipio_slug])->first();
 
-        // Recria o paginator leve (dinamicamente)
-        $paginator = new \Illuminate\Pagination\LengthAwarePaginator(
-            collect($viewData['estabelecimentos_raw']),
-            $viewData['total'] ?? count($viewData['estabelecimentos_raw']),
-            $viewData['per_page'],
-            $viewData['page'],
-            ['path' => $viewData['base_url']]
-        );
+            if (!$municipio) {
+                abort(404, 'Município não encontrado');
+            }
 
-        $viewData['estabelecimentos'] = $paginator;
-        unset($viewData['estabelecimentos_raw']);
+            // Descobre a UF real (garantindo consistência)
+            $firstEstab = \App\Models\Estabelecimento::where('municipio', $municipio->codigo)->select('uf')->first();
+            if (!$firstEstab) {
+                abort(404, 'Nenhum estabelecimento encontrado para este município');
+            }
 
+            // Reaproveita a lógica do Job para montar dinamicamente (fallback)
+            $ufUpper = $firstEstab->uf;
+            $nomeEstado = [
+                'ac'=>'Acre','al'=>'Alagoas','ap'=>'Amapá','am'=>'Amazonas','ba'=>'Bahia','ce'=>'Ceará','df'=>'Distrito Federal','es'=>'Espírito Santo',
+                'go'=>'Goiás','ma'=>'Maranhão','mt'=>'Mato Grosso','ms'=>'Mato Grosso do Sul','mg'=>'Minas Gerais','pa'=>'Pará','pb'=>'Paraíba',
+                'pr'=>'Paraná','pe'=>'Pernambuco','pi'=>'Piauí','rj'=>'Rio de Janeiro','rn'=>'Rio Grande do Norte','rs'=>'Rio Grande do Sul',
+                'ro'=>'Rondônia','rr'=>'Roraima','sc'=>'Santa Catarina','sp'=>'São Paulo','se'=>'Sergipe','to'=>'Tocantins'
+            ][$ufLower] ?? $ufUpper;
+
+            $perPage = 50;
+            $query = \App\Models\Estabelecimento::where('uf', $ufUpper)
+                ->where('situacao_cadastral', 2)
+                ->where('municipio', $municipio->codigo)
+                ->with('empresa:cnpj_basico,razao_social,capital_social')
+                ->select('cnpj_basico', 'cnpj_ordem', 'cnpj_dv', 'cep');
+
+            $estabelecimentos = $query->paginate($perPage)->withPath(url("empresas/{$ufLower}/{$municipio_slug}"));
+
+            $viewData = [
+                'nomeMunicipio' => $municipio->descricao,
+                'nomeEstado' => $nomeEstado,
+                'uf' => $ufUpper,
+                'estabelecimentos' => $estabelecimentos,
+            ];
+
+            // Armazena em cache para as próximas requisições
+            Cache::put($cacheKey, $viewData, now()->addMonths(2));
+        }*/
+
+        // Renderiza normalmente
         return view('pages.empresas.localizacao.municipios.index', $viewData);
     }
     // #########################################################################################################
