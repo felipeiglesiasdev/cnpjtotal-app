@@ -8,8 +8,10 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
             <div class="lg:col-span-1">
+                <x-empresas.top-10-cidades :cidades="$top10Cidades" /> 
             </div>
             <div class="lg:col-span-1">
+                <x-empresas.top-10-estados :estados="$top10Estados" /> 
             </div>
         </div>
         <div class="mt-16">
