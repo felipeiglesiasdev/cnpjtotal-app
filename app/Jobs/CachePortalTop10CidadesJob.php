@@ -19,7 +19,7 @@ class CachePortalTop10CidadesJob implements ShouldQueue
 
     public $timeout = 600;
     public $tries = 1;
-    protected $cacheKey = 'portal_top_10_cidades_t1';
+    protected $cacheKey = 'portal_top_10_cidades';
 
     public function handle(): void
     {

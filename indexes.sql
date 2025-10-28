@@ -1,39 +1,36 @@
--- BUSCA DE MUNICIPIOS
+-- PORTAL --------------------------------------------------------------------------------
+-- TOP 10 CIDADES 
+CREATE INDEX idx_estab_sit_mun_uf ON estabelecimentos (situacao_cadastral, municipio, uf);
 
-CREATE INDEX idx_estabelecimentos_municipio_uf ON estabelecimentos(municipio, uf);
+-- TOP 10 ESTADOS
+CREATE INDEX idx_estab_sit_uf ON estabelecimentos (situacao_cadastral, uf);
 
--- BUSCA DE CEP
-CREATE INDEX idx_estab_cep ON estabelecimentos(cep);
-CREATE INDEX idx_estab_situacao_cep ON estabelecimentos(situacao_cadastral, cep);
-CREATE INDEX idx_estab_municipio_situacao_cep ON estabelecimentos(municipio,situacao_cadastral, cep);
-CREATE INDEX idx_estab_uf_municipio_situacao_cep ON estabelecimentos(uf, municipio, situacao_cadastral, cep);
-
--- FECHAMENTOS
-CREATE INDEX idx_estab_situacao_data_uf ON estabelecimentos(situacao_cadastral, data_situacao_cadastral, uf);
-
--- ABERTURAS
-CREATE INDEX idx_estab_data_inicio ON estabelecimentos(data_inicio_atividade);
-CREATE INDEX idx_estab_situacao_cadastral_data_situacao_cadastral ON estabelecimentos (situacao_cadastral, data_situacao_cadastral);
-
--- TOP 10 CNAES
-CREATE INDEX idx_estab_situacao_cnae_principal ON estabelecimentos(situacao_cadastral, cnae_fiscal_principal);
-
--- TOP 10 CIDADES E ESTADOS
-CREATE INDEX idx_estab_situacao ON estabelecimentos(situacao_cadastral);
+-- FECHAMENTOS PORTAL
+CREATE INDEX idx_estab_sit_data_uf ON estabelecimentos (situacao_cadastral, data_situacao_cadastral, uf);
 
 
+-- TOP 10 ATIVIDADES
+CREATE INDEX idx_estab_sit_cnae_fiscal_principal ON estabelecimentos (situacao_cadastral, cnae_fiscal_principal);
 
--- PÁGINA DE UFs
-CREATE INDEX idx_estab_uf_situacao ON estabelecimentos(uf, situacao_cadastral);
-CREATE INDEX idx_estab_uf_situacao_identificador_matriz_filial ON estabelecimentos(uf, situacao_cadastral, identificador_matriz_filial);
-CREATE INDEX idx_estab_uf_data_inicio_atividade ON estabelecimentos (uf, data_inicio_atividade);
-CREATE INDEX idx_estab_uf_situacao_cadastral_data_situacao_cadastral ON estabelecimentos (uf, situacao_cadastral, data_situacao_cadastral);
-CREATE INDEX idx_estab_uf_situacao_cnae_principal ON estabelecimentos(uf, situacao_cadastral, cnae_fiscal_principal);
+-- daqui pra baixo, ainda precisa fazer
 
--- PÁGINA CNPJ
-CREATE INDEX idx_estab_municipio_situacao_cnae_principal_cnpj_basico ON estabelecimentos(municipio, situacao_cadastral, cnae_fiscal_principal, cnpj_basico);
-CREATE INDEX idx_estab_uf_situacao_cnae_principal_cnpj_basico ON estabelecimentos(uf, situacao_cadastral, cnae_fiscal_principal, cnpj_basico);
+-- STATS ABERTAS E FECHADAS
+CREATE INDEX idx_estab_sit_data ON estabelecimentos (situacao_cadastral, data_situacao_cadastral);
+CREATE INDEX idx_estab_data_inicio ON estabelecimentos (data_inicio_atividade);
+-----------------------------------------------------------------------------------------
 
 
-CREATE INDEX idx_estab_situacao_municipio_uf ON estabelecimentos(situacao_cadastral, municipio, uf);
+-- KPIs por UF e situacao
+CREATE INDEX idx_estab_uf_sit ON estabelecimentos(uf, situacao_cadastral);
+-- Datas
+CREATE INDEX idx_estab_uf_data_inicio ON estabelecimentos(uf, data_inicio_atividade);
+CREATE INDEX idx_estab_uf_sit_data ON estabelecimentos(uf, situacao_cadastral, data_situacao_cadastral);
+-- Top cidades e total municípios
+CREATE INDEX idx_estab_uf_sit_municipio ON estabelecimentos(uf, situacao_cadastral, municipio);
+-- Top atividades
+CREATE INDEX idx_estab_uf_sit_cnae ON estabelecimentos(uf, situacao_cadastral, cnae_fiscal_principal);
+-- CEPS aleatórios
+CREATE INDEX idx_estab_uf_mun_sit ON estabelecimentos(uf, municipio, situacao_cadastral);
+CREATE INDEX idx_estab_uf_mun_cep_sit ON estabelecimentos(uf, municipio, cep, situacao_cadastral);
+
 

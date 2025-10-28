@@ -17,7 +17,7 @@ class CachePortalTop10AtividadesJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $timeout = 600;
-    protected $cacheKey = 'top_10_atividades_t1';
+    protected $cacheKey = 'top_10_atividades';
 
     public function handle(): void
     {

@@ -11,7 +11,7 @@ class PageController extends Controller
     // PÁGINA INICIAL
     public function home() { 
         // 1. BALANÇO DE EMPRESAS ABERTAS EM 2025 VS ENCERRADAS/INATIVAS EM 2025
-        $balanco2025 = Cache::remember('home_balanco_2025', now()->addDay(), function () {
+        $balanco2025 = Cache::remember('home_balanco_2025', now()->addMonths(2), function () {
             $hoje = Carbon::now()->toDateString();
             $inicioAno = Carbon::now()->startOfYear()->toDateString(); // '2025-01-01'
             $abertas = Estabelecimento::whereBetween('data_inicio_atividade', [$inicioAno, $hoje])->count();
@@ -20,7 +20,7 @@ class PageController extends Controller
             return ['abertas' => $abertas, 'encerradas_inativas' => $encerradasInativas];
         });
         // 2. TOTAL DE EMPRESAS POR SITUAÇÃO CADASTRAL
-        $totalPorSituacao = Cache::remember('home_total_por_situacao', now()->addDay(), function () {
+        $totalPorSituacao = Cache::remember('home_total_por_situacao', now()->addMonths(2), function () {
             // Códigos: 1-NULA, 2-ATIVA, 3-SUSPENSA, 4-INAPTA (BAIXADA), 8-BAIXADA
             return Estabelecimento::select('situacao_cadastral', DB::raw('count(*) as total'))
                 ->groupBy('situacao_cadastral')
@@ -38,7 +38,7 @@ class PageController extends Controller
             return [$nome => $totalPorSituacao[$codigo] ?? 0];
         });
         // 3. TOP 3 MAIORES ATIVIDADES 
-        $top3AtividadesBrasil = Cache::remember('home_top_3_atividades_brasil', now()->addDay(), function () {
+        $top3AtividadesBrasil = Cache::remember('home_top_3_atividades_brasil', now()->addMonths(2), function () {
              return Estabelecimento::join('cnaes as c', 'estabelecimentos.cnae_fiscal_principal', '=', 'c.codigo')
                 ->select('estabelecimentos.cnae_fiscal_principal as codigo','c.descricao',DB::raw('COUNT(*) as total'))
                 ->where('estabelecimentos.situacao_cadastral', 2)

@@ -16,17 +16,17 @@ class PortalController extends Controller
     public function index()
     {
         // BUSCA AS 10 CIDADES COM MAIS EMPRESAS ATIVAS (LÊ DO CACHE).
-        $top10Cidades = Cache::get('portal_top_10_cidades_t3', collect());
+        $top10Cidades = Cache::get('portal_top_10_cidades', collect());
         // BUSCA OS 10 ESTADOS COM MAIS EMPRESAS ATIVAS (LÊ DO CACHE).
-        $top10Estados = Cache::get('portal_top_10_estados_t1', collect());
+        $top10Estados = Cache::get('portal_top_10_estados', collect());
         // BUSCA OS 3 ESTADOS QUE MAIS FECHARAM EMPRESAS NO ANO DE 2024 (LÊ DO CACHE).
-        $estadosMaisFechamentos = Cache::get('portal_estados_mais_fechamentos_2024_t1', collect());
+        $estadosMaisFechamentos = Cache::get('portal_estados_mais_fechamentos_2024', collect());
         // BUSCA AS 10 ATIVIDADES ECONÔMICAS MAIS COMUNS (LÊ DO CACHE).
-        $top10Atividades = Cache::get('top_10_atividades_t1', collect());
+        $top10Atividades = Cache::get('top_10_atividades', collect());
         // ESTATÍSTICAS DE EMPRESAS ABERTAS (ANO A ANO) (LÊ DO CACHE).
-        $statsAbertas = Cache::get('portal_stats_abertas_por_ano_t1', collect());
+        $statsAbertas = Cache::get('portal_stats_abertas_por_ano', collect());
         // ESTATÍSTICAS DE EMPRESAS FECHADAS (ANO A ANO) (LÊ DO CACHE).
-        $statsFechadas = Cache::get('portal_stats_fechadas_por_ano_t1', collect());
+        $statsFechadas = Cache::get('portal_stats_fechadas_por_ano', collect());
         // RETORNA A VIEW PRINCIPAL DO PORTAL, PASSANDO TODOS OS DADOS.
         return view('pages.empresas.index', [
             'top10Cidades' => $top10Cidades,

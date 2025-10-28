@@ -16,7 +16,7 @@ class CachePortalTop10EstadosJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $timeout = 600;
-    protected $cacheKey = 'portal_top_10_estados_t1';
+    protected $cacheKey = 'portal_top_10_estados';
 
     public function handle(): void
     {

@@ -20,11 +20,11 @@ class CachePortalDataCommand extends Command
         $this->info('Disparando jobs de cache para o Portal...');
 
         CachePortalTop10CidadesJob::dispatch();
-        //CachePortalTop10EstadosJob::dispatch();
-        //CachePortalFechamentosJob::dispatch();
-        //CachePortalTop10AtividadesJob::dispatch();
-        //CachePortalStatsAbertasJob::dispatch();
-        //CachePortalStatsFechadasJob::dispatch();
+        CachePortalTop10EstadosJob::dispatch();
+        CachePortalFechamentosJob::dispatch();
+        CachePortalTop10AtividadesJob::dispatch();
+        CachePortalStatsAbertasJob::dispatch();
+        CachePortalStatsFechadasJob::dispatch();
 
         $this->info('Todos os 6 jobs foram enviados para a fila.');
     }

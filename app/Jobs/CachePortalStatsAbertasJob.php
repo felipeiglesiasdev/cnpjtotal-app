@@ -15,7 +15,7 @@ class CachePortalStatsAbertasJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $timeout = 600;
-    protected $cacheKey = 'portal_stats_abertas_por_ano_t1';
+    protected $cacheKey = 'portal_stats_abertas_por_ano';
 
     public function handle(): void
     {
