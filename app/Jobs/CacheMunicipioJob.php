@@ -83,7 +83,7 @@ class CacheMunicipioJob implements ShouldQueue
                     'nomeMunicipio' => $municipio->descricao,
                     'nomeEstado' => $nomeEstado,
                     'uf' => $ufUpper,
-                    'estabelecimentos_raw' => $items, // << só dados simples
+                    'estabelecimentos' => $items, // << só dados simples
                     'page' => $page,
                     'per_page' => $perPage,
                     'total' => $municipio->estabelecimentos()->where('situacao_cadastral', 2)->count(),
