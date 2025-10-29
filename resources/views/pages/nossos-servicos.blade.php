@@ -120,7 +120,9 @@
              <p class="text-gray-200 mb-6 max-w-xl mx-auto">
                  Vamos conversar sobre como podemos criar a lista de leads perfeita para o seu negócio crescer.
              </p>
-             <a href="#contato" {{-- Ou a rota/URL correta --}}
+             <a href="https://wa.me/5532998620167?text=Ol%C3%A1%2C%20gostaria%20de%20saber%20mais..." 
+                target="_blank"
+                rel="noopener nofollow"
                 class="inline-block bg-[#ed1c24] text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-[#c11b21] hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-[#ed1c24]/50">
                  Solicitar Orçamento
              </a>

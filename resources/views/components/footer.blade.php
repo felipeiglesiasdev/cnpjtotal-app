@@ -81,8 +81,7 @@ $cnaesExemplo = [
                     {{-- Link do Portal Adicionado --}}
                     <li><a href="{{ route('portal.index') }}" class="text-sm hover:text-[#ed1c24] transition-all duration-200 transform hover:-translate-y-px inline-block">Portal de Análise</a></li>
                     <li><a href="{{ route('nossosServicos') }}" class="text-sm hover:text-[#ed1c24] transition-all duration-200 transform hover:-translate-y-px inline-block">Nossos Serviços</a></li>
-                    <li><a href="#" rel="nofollow" class="text-sm hover:text-[#ed1c24] transition-all duration-200 transform hover:-translate-y-px inline-block">Política de Privacidade</a></li>
-                    <li><a href="#" rel="nofollow" class="text-sm hover:text-[#ed1c24] transition-all duration-200 transform hover:-translate-y-px inline-block">Solicitar Remoção</a></li>
+                    
                     <li><a href="https://dados.gov.br/dados/conjuntos-dados/cadastro-nacional-da-pessoa-juridica---cnpj" target="_blank" rel="nofollow noopener" class="text-sm hover:text-[#ed1c24] transition-all duration-200 transform hover:-translate-y-px inline-block">Fonte dos Dados (Gov)</a></li>
                 </ul>
             </div>
