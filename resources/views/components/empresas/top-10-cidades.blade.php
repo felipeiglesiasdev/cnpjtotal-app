@@ -8,7 +8,7 @@
         </div>
         <div>
             <h2 class="text-2xl font-bold text-gray-800">Cidades em Destaque</h2>
-            <p class="text-sm text-gray-500">Os 5 municípios com mais empresas ativas.</p>
+            <p class="text-sm text-gray-500">Os 10 municípios com mais empresas ativas.</p>
         </div>
     </div>
 
