@@ -206,7 +206,7 @@ class LocalizacaoController extends Controller
             ->select('uf', 'municipio')
             ->first();
 
-           /* 
+           
         $ufUpper = $primeiroEstabelecimento->uf;
         $ufLower = strtolower($ufUpper);
         $codigoMunicipio = $primeiroEstabelecimento->municipio;
@@ -233,17 +233,17 @@ class LocalizacaoController extends Controller
         // Formata o CEP para exibição
         $cepFormatado = $estabelecimentos->isNotEmpty() ? $estabelecimentos->first()->cep_formatado : $cep;
 
-        */
+        
         // ENVIA OS DADOS PARA A VIEW
         return view('pages.empresas.localizacao.cep.index', [
-            //'cep' => $cepLimpo,
-            //'cepFormatado' => $cepFormatado,
-            //'nomeMunicipio' => $nomeMunicipio,
-            //'municipioSlug' => $municipioSlug, // Para link no breadcrumb
-            //'nomeEstado' => $nomeEstado,
-            //'uf' => $ufUpper, // Passa UF maiúscula para consistência
-            //'ufLower' => $ufLower, // Passa UF minúscula para links
-            //'estabelecimentos' => $estabelecimentos,
+            'cep' => $cepLimpo,
+            'cepFormatado' => $cepFormatado,
+            'nomeMunicipio' => $nomeMunicipio,
+            'municipioSlug' => $municipioSlug, // Para link no breadcrumb
+            'nomeEstado' => $nomeEstado,
+            'uf' => $ufUpper, // Passa UF maiúscula para consistência
+            'ufLower' => $ufLower, // Passa UF minúscula para links
+            'estabelecimentos' => $estabelecimentos,
         ]);
     }
 }

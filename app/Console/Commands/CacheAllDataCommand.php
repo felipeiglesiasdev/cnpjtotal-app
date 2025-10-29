@@ -30,10 +30,6 @@ class CacheAllDataCommand extends Command
         Artisan::call('cache:municipios'); // Chama o comando existente
         $this->info(Artisan::output());
 
-        $this->line('');
-        $this->info('4/4 - Cacheando dados dos CEPs...');
-        Artisan::call('cache:ceps'); // Chama o comando existente
-        $this->info(Artisan::output());
 
         $this->line('');
         $this->info('Processo completo de pré-cache concluído!');

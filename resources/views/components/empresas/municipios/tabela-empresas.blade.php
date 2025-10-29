@@ -22,7 +22,7 @@
             @forelse ($estabelecimentos as $estabelecimento)
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        <a href="{{ route('cnpj.show', ['cnpj' => $estabelecimento->cnpj_completo]) }}" class="text-red-600 hover:text-red-800 hover:underline" target="_blank">
+                        <a href="{{ route('cnpj.show', ['cnpj' => $estabelecimento->cnpj_completo]) }}" class="text-red-600 hover:text-red-800 hover:underline">
                             {{ $estabelecimento->cnpj_completo_formatado }}
                         </a>
                     </td>
@@ -30,7 +30,7 @@
                         <span class="font-medium">{{ $estabelecimento->empresa->razao_social ?? 'N/A' }}</span>
                     </td>
                      <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <a href="{{ route('portal.por-cep', ['cep' => $estabelecimento->cep]) }}" class="text-red-600 hover:text-red-800 hover:underline" target="_blank">
+                        <a href="{{ route('portal.por-cep', ['cep' => $estabelecimento->cep]) }}" class="text-red-600 hover:text-red-800 hover:underline">
                                 {{ $estabelecimento->cep_formatado ?? 'N/A' }}
                             </a>
                     </td>

@@ -41,3 +41,12 @@ CREATE INDEX idx_estab_municipio_uf ON estabelecimentos(municipio, uf);
 
 
 CREATE INDEX idx_estab_cep_sit ON estabelecimentos(cep, situacao_cadastral);
+
+CREATE INDEX idx_estab_municipio_sit_cnae_cnpj ON estabelecimentos(municipio, situacao_cadastral, cnae_fiscal_principal, cnpj_basico);
+
+CREATE INDEX idx_estab_uf_cnae_fiscal_principal ON estabelecimentos(uf, cnae_fiscal_principal);
+
+CREATE INDEX idx_estab_uf_municipio ON estabelecimentos(uf, municipio);
+
+CREATE INDEX idx_estab_cnae_fiscal_principaluf ON estabelecimentos(cnae_fiscal_principal, uf);
+CREATE INDEX idx_estab_municipio_uf_situacao ON estabelecimentos (municipio, uf, situacao_cadastral);
