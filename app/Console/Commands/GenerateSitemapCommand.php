@@ -35,7 +35,7 @@ class GenerateSitemapCommand extends Command
 
         $chunkSize = 30000;
         $totalLimit = 1500000;
-        $baseUrl = 'https://www.cnpjtotal.com.br';
+        $baseUrl = 'https://www.consultarcnpjgratis.com';
         $sitemapIndexLastMod = Carbon::now()->toDateString();
         $urlLastMod = '2025-10-28';
         $urlChangeFreq = 'monthly';
@@ -53,7 +53,7 @@ class GenerateSitemapCommand extends Command
             DB::connection('mysql_dados')
                 ->table('estabelecimentos')
                 ->select('cnpj_basico', 'cnpj_ordem', 'cnpj_dv')
-                ->where('uf', 'SP')
+                ->where('uf', 'MG')
                 ->where('situacao_cadastral', 2)
                 ->where('identificador_matriz_filial', 1)
                 ->orderBy('cnpj_basico')

@@ -11,9 +11,7 @@ use Illuminate\View\View;
 class CnaeController extends Controller
 {
 
-    /**
-     * Realiza a busca de CNAEs em tempo real para o formulário.
-     */
+    // PROCESSA O FORMULÁRIO EM TEMPO REAL NA PAGINA DE CONSULTAR CNAE
     public function search(Request $request): JsonResponse
     {
         $query = $request->input('q', '');
@@ -32,9 +30,7 @@ class CnaeController extends Controller
         return response()->json($cnaes);
     }
 
-    /**
-     * Exibe os detalhes de um CNAE específico e as empresas relacionadas.
-     */
+    // PÁGINA INDIVIDUAL DE CADA CNAE (CNAE.SHOW)
     public function show(string $cnae): View
     {
         $cnaeData = Cnae::where('codigo', $cnae)->firstOrFail();

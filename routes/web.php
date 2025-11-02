@@ -5,6 +5,8 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\CnaeController;
 use App\Http\Controllers\LocalizacaoController;
 use App\Http\Controllers\PortalController;
+use App\Http\Controllers\CepController;
+
 
 // --- ROTAS PRINCIPAIS DO SITE ---
 Route::get('/', [PageController::class, 'home'])->name('home');                                                         // ROTA PÁGINA INICIAL

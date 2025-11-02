@@ -199,6 +199,11 @@ class LocalizacaoController extends Controller
         // 1. Validação básica e Limpeza do CEP (remove não numéricos)
         $cepLimpo = preg_replace('/[^0-9]/', '', $cep);
 
+         if (strlen($cepLimpo) !== 8) {
+            // ERRO 1: Usuário não digitou todos os dígitos
+            return redirect()->route('cep.index')
+                ->with('error', 'CEP inválido. Por favor, digite os 8 dígitos do CEP.');
+        }
         
         // 2. Busca o primeiro estabelecimento ativo para pegar dados de localização (UF, Município)
         $primeiroEstabelecimento = Estabelecimento::where('cep', $cepLimpo)
@@ -206,6 +211,16 @@ class LocalizacaoController extends Controller
             ->select('uf', 'municipio')
             ->first();
 
+
+        // 3. Verifica se encontrou alguma empresa ativa
+        if (!$primeiroEstabelecimento) {
+            // Formata o CEP digitado para a mensagem de erro
+            $cepFormatadoInput = substr($cepLimpo, 0, 5) . '-' . substr($cepLimpo, 5, 3);
+            
+            // ERRO 2: Nenhuma empresa ativa encontrada
+            return redirect()->route('cep.index')
+                ->with('error', "Nenhuma empresa ativa foi encontrada para o CEP {$cepFormatadoInput}.");
+        }
            
         $ufUpper = $primeiroEstabelecimento->uf;
         $ufLower = strtolower($ufUpper);
